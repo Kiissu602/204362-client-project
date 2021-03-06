@@ -26,7 +26,7 @@
         </v-list-item>
       </v-list>
 
-      <template v-slot:append>
+      <template #append>
         <v-list nav>
           <div v-if="login.loggedIn !== true">
             <v-list-item
