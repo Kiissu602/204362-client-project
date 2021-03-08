@@ -83,7 +83,14 @@
 import { mapState } from 'vuex'
 export default {
   data: () => ({
-    items: [{ icon: 'mdi-home-outline', title: 'Library System', to: '/' }],
+    items: [
+      {
+        icon: 'mdi-home-outline',
+        title: 'Library System',
+        to: '/',
+      },
+      { icon: 'mdi-alpha-r-box-outline', title: 'กฎการยืม', to: '/ruler' },
+    ],
   }),
   computed: {
     ...mapState({

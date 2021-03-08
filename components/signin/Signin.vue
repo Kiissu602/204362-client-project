@@ -1,39 +1,40 @@
 <template>
-  <v-from class="lgn">
-    <v-container>
+  <v-form class="lgn" @submit.prevent="submit">
+    <v-card class="pa-4">
       <p class="title font-weight-bold">ลงชื่อเข้าใช้.</p>
-      <v-col>
-        <v-text-field
-          v-model="usn"
-          label="ชื่อผู้ใช้งาน"
-          outlined
-          required
-          type="text"
-        ></v-text-field>
-      </v-col>
-      <v-col>
-        <v-text-field
-          v-model="pwd"
-          type="password"
-          label="รหัสผ่าน"
-          outlined
-          required
-        ></v-text-field>
-      </v-col>
-      <div class="btn">
-        <v-btn class="sm justify-center" color="primary" @click="submit"
-          >ยืนยัน</v-btn
-        >
-        <v-btn
-          class="cc justify-center"
-          outlined
-          color="secondary"
-          @click="cancle"
-          >ยกเลิก</v-btn
-        >
+      <v-text-field
+        v-model="usn"
+        label="อีเมล"
+        outlined
+        required
+        type="text"
+        dense
+      ></v-text-field>
+      <v-text-field
+        v-model="pwd"
+        type="password"
+        label="รหัสผ่าน"
+        outlined
+        required
+        dense
+      ></v-text-field>
+      <v-btn class="sm justify-center" color="primary" type="submit" block>
+        ยืนยัน
+      </v-btn>
+      <div class="text-center mt-4">
+        <a color="primary"> ลืมรหัสผ่าน </a>
       </div>
-    </v-container>
-  </v-from>
+    </v-card>
+    <v-card class="pa-4 mt-6"
+      ><div class="text-center">
+        <span color="primary">
+          ยังไม่มีบัญชี ?<nuxt-link color="primary" to="/Signup">
+            สมัครสมาชิก
+          </nuxt-link>
+        </span>
+      </div>
+    </v-card>
+  </v-form>
 </template>
 
 <script>
@@ -61,6 +62,7 @@ export default {
       this.$router.push('/')
     },
     submit() {
+      console.log('kfwogojgajigf')
       this.cntEnt = false
       this.errMsg = ''
       if (this.usn === '' || this.pwd === '') {

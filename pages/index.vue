@@ -1,10 +1,13 @@
 <template>
   <v-container>
-    <div class="search">
+    <h1 class="text-h5 text-center mt-12">ค้นหาหนังสือ</h1>
+    <div class="search mt-4">
       <v-text-field
         v-model="search"
         outlined
-        prepend-inner-icon="mdi-magnify"
+        append-icon="mdi-magnify"
+        dense
+        placeholder="ตัวอย่าง ภาคินัย, Sofa publishing"
       ></v-text-field>
     </div>
   </v-container>
