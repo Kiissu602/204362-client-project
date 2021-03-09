@@ -89,7 +89,7 @@ export default {
         title: 'Library System',
         to: '/',
       },
-      { icon: 'mdi-alpha-r-box-outline', title: 'กฎการยืม', to: '/ruler' },
+      { icon: 'mdi-format-list-checkbox', title: 'กฎการยืม', to: '/ruler' },
     ],
   }),
   computed: {

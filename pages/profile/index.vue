@@ -1,5 +1,5 @@
 <template>
-  <Profile />
+  <div class="lggin d-flex align-center justify-center"><Profile /></div>
 </template>
 
 <script>

@@ -2,9 +2,8 @@ export const state = () => ({
   login: {
     loggedIn: false,
     PID: null,
-    fName: null,
-    lName: null,
     bdate: null,
+    sex: null,
     username: null,
     type: null,
     faculty: null,
@@ -26,9 +25,8 @@ export const mutations = {
     state.login = {
       loggedIn: false,
       PID: null,
-      fName: null,
-      lName: null,
       bdate: null,
+      sex: null,
       username: null,
       type: null,
       faculty: null,
