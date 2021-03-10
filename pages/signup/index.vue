@@ -1,7 +1,6 @@
 <template>
   <div class="ind d-flex align-center justify-center">
-    <Signup1 v-if="pg === 1" @next="next" />
-    <Signup2 v-if="pg === 2" @back="back" @submit="submit" />
+    <Signup />
   </div>
 </template>
 

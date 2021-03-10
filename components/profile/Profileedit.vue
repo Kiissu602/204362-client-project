@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="info"><v-icon left> mdi-pencil </v-icon> แก้ไข </v-btn>
+  <v-btn color="warning"><v-icon left> mdi-pencil </v-icon> แก้ไข </v-btn>
 </template>
 
 <script>

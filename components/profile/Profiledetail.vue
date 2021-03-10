@@ -6,7 +6,9 @@
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">วันเกิด:</v-col>
-      <v-col class="text-left pa-0">{{ detail.bdate }}</v-col>
+      <v-col class="text-left pa-0">{{
+        dayjs(detail.bdate).format('DD-MM-BBBB')
+      }}</v-col>
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">เพศ:</v-col>
@@ -32,14 +34,19 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
   props: {
     detail: Object,
   },
   computed: {
     text() {
-      return `${this.detail.fname}\t${this.detail.lname}`
+      return `${this.detail.fname} ${this.detail.lname}`
     },
+  },
+  methods: {
+    dayjs,
   },
 }
 </script>
