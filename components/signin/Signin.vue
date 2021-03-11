@@ -12,11 +12,13 @@
       ></v-text-field>
       <v-text-field
         v-model="pwd"
-        type="password"
+        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show ? 'text' : 'password'"
         label="รหัสผ่าน"
         outlined
         required
         dense
+        @click:append="show = !show"
       ></v-text-field>
       <v-btn class="sm justify-center" color="primary" type="submit" block>
         ยืนยัน
@@ -46,6 +48,7 @@ export default {
     cntEnt: false,
     usn: '',
     pwd: '',
+    show: false,
   }),
   mounted() {
     const storage = localStorage.getItem('mm-login')

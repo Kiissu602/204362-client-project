@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <h1 class="text-h5 text-center mt-12">กฏการยืมหนังสือ</h1>
+    <span class="d-flex justify-end pt-n3">
+      <nuxt-link color="primary" to="/Signup">แก้ไขกฏ</nuxt-link>
+    </span>
     <Rulers class="mt-8" />
     <Rulerss
       class="pa-12"

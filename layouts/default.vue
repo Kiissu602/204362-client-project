@@ -24,6 +24,34 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
+        <div v-if="login.type === 'Admin'">
+          <v-list-group
+            v-for="item in lgnd"
+            :key="item.title"
+            :prepend-icon="item.action"
+            no-action
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title"></v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              v-for="child in item.items"
+              :key="child.title"
+              :to="child.to"
+              router
+              exact
+            >
+              <v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title v-text="child.title"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list-group>
+        </div>
       </v-list>
 
       <template #append>
@@ -55,7 +83,7 @@
           <div v-else>
             <v-list-item to="/profile" link exact color="primary">
               <v-list-item-action>
-                <v-icon>mdi-account-box</v-icon>
+                <v-icon>mdi-account-box-outline</v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title v-text="'ข้อมูลผู้ใช้'" />
@@ -90,6 +118,27 @@ export default {
         to: '/',
       },
       { icon: 'mdi-format-list-checkbox', title: 'กฎการยืม', to: '/ruler' },
+    ],
+    lgnd: [
+      {
+        action: 'mdi-book-open-outline',
+        items: [
+          { title: 'เพิ่มหนังสือ', to: '/addbook' },
+          { title: 'การยืม', to: '' },
+          { title: 'การคืน', to: '' },
+        ],
+        title: 'จัดการหนังสือ',
+      },
+      {
+        action: 'mdi-account-multiple-outline',
+        items: [
+          { title: 'ค้นหาสมาชิก', to: '' },
+          { title: 'รายการจอง', to: '' },
+          { title: 'รายการยืม', to: '' },
+          { title: 'ประวัติการยืม', to: '' },
+        ],
+        title: 'จัดการสมาชิก',
+      },
     ],
   }),
   computed: {
