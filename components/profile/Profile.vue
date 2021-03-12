@@ -11,7 +11,7 @@
       <ProfileDetail :detail="login" />
     </div>
     <div class="d-flex justify-end ma-4">
-      <ProfileEdit />
+      <ProfileEditButton />
     </div>
   </v-card>
 </template>

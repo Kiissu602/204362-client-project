@@ -16,7 +16,13 @@
       </label>
       <v-row>
         <v-col>
-          <v-text-field class="pl-8 pt-4" outlined dense label="รหัส" />
+          <v-text-field
+            class="pl-8 pt-4"
+            disabled
+            outlined
+            dense
+            label="รหัส"
+          />
           <v-row class="py-4 pl-8">
             <v-col><v-text-field outlined dense label="ชื่อ" /> </v-col>
             <v-col><v-text-field outlined dense label="นามสกุล" /> </v-col>
@@ -203,4 +209,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

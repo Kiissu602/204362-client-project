@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1 class="text-h5 text-center mt-12">กฏการยืมหนังสือ</h1>
-    <span class="d-flex justify-end pt-n3">
+    <span v-if="login.type === 'Admin'" class="d-flex justify-end pt-n3">
       <nuxt-link color="primary" to="/Signup">แก้ไขกฏ</nuxt-link>
     </span>
     <Rulers class="mt-8" />
@@ -18,10 +18,14 @@
 </template>
 
 <script>
-import Rulers from './Rulers.vue'
+import { mapState } from 'vuex'
 export default {
-  components: { Rulers },
   data: () => ({}),
+  computed: {
+    ...mapState({
+      login: (state) => state.login,
+    }),
+  },
 }
 </script>
 

@@ -31,7 +31,7 @@
             :prepend-icon="item.action"
             no-action
           >
-            <template v-slot:activator>
+            <template #activator>
               <v-list-item-content>
                 <v-list-item-title v-text="item.title"></v-list-item-title>
               </v-list-item-content>
@@ -52,6 +52,14 @@
             </v-list-item>
           </v-list-group>
         </div>
+        <v-list-item v-if="login.loggedIn" to="" router exact color="primary">
+          <v-list-item-action>
+            <v-icon>mdi-truck-fast-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="'สถานะการจัดส่ง'" />
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
 
       <template #append>
@@ -81,7 +89,7 @@
             </v-list-item>
           </div>
           <div v-else>
-            <v-list-item to="/profile" link exact color="primary">
+            <v-list-item to="/profile" link color="primary">
               <v-list-item-action>
                 <v-icon>mdi-account-box-outline</v-icon>
               </v-list-item-action>
@@ -141,11 +149,13 @@ export default {
       },
     ],
   }),
+
   computed: {
     ...mapState({
       login: (state) => state.login,
     }),
   },
+
   methods: {
     logout() {
       this.$store.commit('LOGOUT')

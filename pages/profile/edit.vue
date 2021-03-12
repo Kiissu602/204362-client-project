@@ -1,5 +1,5 @@
 <template>
-  <div class="adb d-flex align-center justify-center"><AddBook /></div>
+  <div class="ed d-flex align-center justify-center"><EditProfile /></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-.adb {
+.ed {
   height: 100vh;
 }
 </style>

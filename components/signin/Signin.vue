@@ -65,7 +65,6 @@ export default {
       this.$router.push('/')
     },
     submit() {
-      console.log('kfwogojgajigf')
       this.cntEnt = false
       this.errMsg = ''
       if (this.usn === '' || this.pwd === '') {
