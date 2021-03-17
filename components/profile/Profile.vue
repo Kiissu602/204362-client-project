@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card lass="ca d-flex justify-center">
     <div class="profile d-flex justify-center ma-6">
       <v-card class="ml-4" max-height="150"
         ><v-img
@@ -22,7 +22,6 @@ import { mapState } from 'vuex'
 export default {
   filters: {
     img(path) {
-      console.log(path)
       return `${process.env.ENDPOINT}/uploads/${path}`
     },
   },

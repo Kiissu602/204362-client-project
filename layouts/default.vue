@@ -132,17 +132,17 @@ export default {
         action: 'mdi-book-open-outline',
         items: [
           { title: 'เพิ่มหนังสือ', to: '/addbook' },
-          { title: 'การยืม', to: '' },
-          { title: 'การคืน', to: '' },
+          { title: 'ยืม', to: '/borrow' },
+          { title: 'คืน', to: '/return' },
         ],
         title: 'จัดการหนังสือ',
       },
       {
         action: 'mdi-account-multiple-outline',
         items: [
-          { title: 'ค้นหาสมาชิก', to: '' },
+          { title: 'ค้นหาสมาชิก', to: '/searchmember' },
           { title: 'รายการจอง', to: '' },
-          { title: 'รายการยืม', to: '' },
+          { title: 'รายการยืม', to: '/borrowlist' },
           { title: 'ประวัติการยืม', to: '' },
         ],
         title: 'จัดการสมาชิก',

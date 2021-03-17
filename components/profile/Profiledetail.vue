@@ -7,7 +7,7 @@
     <v-row>
       <v-col class="text-left pa-0" sm="2">วันเกิด:</v-col>
       <v-col class="text-left pa-0">{{
-        dayjs(detail.bdate).format('DD-MM-BBBB')
+        dayjs(detail.bdate).format('DD/MM/BBBB')
       }}</v-col>
     </v-row>
     <v-row>

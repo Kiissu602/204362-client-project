@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="text-h5 text-center mt-12">กฏการยืมหนังสือ</h1>
     <span v-if="login.type === 'Admin'" class="d-flex justify-end pt-n3">
-      <nuxt-link color="primary" to="/Signup">แก้ไขกฏ</nuxt-link>
+      <nuxt-link color="primary" to="/editrule">แก้ไขกฏ</nuxt-link>
     </span>
     <Rulers class="mt-8" />
     <Rulerss
@@ -29,4 +29,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

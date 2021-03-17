@@ -3,13 +3,11 @@
     <div class="d-flex align-center justify-center">
       <label>
         <v-card ripple max-height="150">
-          <v-icon v-if="imgShow === null" size="150">mdi-plus</v-icon>
           <v-img
-            v-else
             height="150"
             width="150"
             :aspect-ratio="1"
-            :src="imgShow"
+            :src="change ? imgShow : imgShoww(login.imgUrl)"
           ></v-img>
         </v-card>
         <input type="file" style="display: none" @change="imgChange" />
@@ -17,6 +15,7 @@
       <v-row>
         <v-col>
           <v-text-field
+            v-model="field.pid"
             class="pl-8 pt-4"
             disabled
             outlined
@@ -24,8 +23,22 @@
             label="รหัส"
           />
           <v-row class="py-4 pl-8">
-            <v-col><v-text-field outlined dense label="ชื่อ" /> </v-col>
-            <v-col><v-text-field outlined dense label="นามสกุล" /> </v-col>
+            <v-col
+              ><v-text-field
+                v-model="field.fname"
+                outlined
+                dense
+                label="ชื่อ"
+              />
+            </v-col>
+            <v-col
+              ><v-text-field
+                v-model="field.lname"
+                outlined
+                dense
+                label="นามสกุล"
+              />
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -39,41 +52,41 @@
           :close-on-content-click="false"
           transition="scale-transition"
           offset-y
-          min-width="290px"
+          min-width="auto"
         >
           <template #activator="{ on, attrs }">
             <v-text-field
-              v-model="bdate"
+              v-model="field.bdate"
               label="วันเกิด"
               append-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
               outlined
               dense
+              readonly
+              v-bind="attrs"
               v-on="on"
             ></v-text-field>
           </template>
           <v-date-picker
             ref="picker"
-            v-model="bdate"
+            v-model="field.bdate"
             :max="new Date().toISOString().substr(0, 10)"
             min="1950-01-01"
-            outlined
             @change="save"
           ></v-date-picker>
         </v-menu>
       </v-col>
       <v-col
-        ><v-select :items="sexs" label="เพศ" dense outlined> </v-select
+        ><v-select v-model="field.sex" :items="sexs" label="เพศ" dense outlined>
+        </v-select
       ></v-col>
       <v-col
-        ><v-text-field v-model="tel" outlined dense label="โทรศัพท์"
+        ><v-text-field v-model="field.phone" outlined dense label="โทรศัพท์"
       /></v-col>
     </v-row>
     <v-row
       ><v-col>
         <v-autocomplete
-          v-model="fac"
+          v-model="field.faculty"
           label="สังกัด"
           :items="faculties"
           outlined
@@ -82,7 +95,7 @@
       </v-col>
       <v-col>
         <v-autocomplete
-          v-model="dep"
+          v-model="field.department"
           label="สาขา"
           :items="department"
           outlined
@@ -90,18 +103,12 @@
         ></v-autocomplete>
       </v-col>
       <v-col>
-        <v-select
-          v-model="type"
-          :items="jobs"
-          label="อาชีพ"
-          outlined
-          dense
-        ></v-select> </v-col
+        <v-select :items="jobs" label="อาชีพ" outlined dense></v-select> </v-col
     ></v-row>
     <v-row>
       <v-col>
         <v-text-field
-          v-model="email"
+          v-model="field.email"
           label="อีเมล"
           outlined
           dense
@@ -109,7 +116,6 @@
       ></v-col>
       <v-col
         ><v-text-field
-          v-model="password"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show1 ? 'text' : 'password'"
           label="รหัสผ่าน"
@@ -120,7 +126,6 @@
       ></v-col>
       <v-col
         ><v-text-field
-          v-model="cpassword"
           :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show3 ? 'text' : 'password'"
           label="ยืนยันรหัสผ่าน"
@@ -131,23 +136,32 @@
       ></v-col>
     </v-row>
     <div class="d-flex justify-end">
-      <v-btn color="success"><v-icon left> mdi-check </v-icon> ยืนยัน </v-btn>
+      <v-btn color="success"
+        ><v-icon left> mdi-content-save-outline </v-icon> บันทึก
+      </v-btn>
     </div>
   </v-form>
 </template>
 
 <script>
+import dayjs from 'dayjs'
+import { mapState } from 'vuex'
 import { getFaculty, getDepart } from '@/api/faculties'
 export default {
   data: () => ({
-    bdate: '',
-    fac: '',
-    dep: '',
-    tel: '',
-    type: '',
-    email: '',
-    password: '',
-    cpassword: '',
+    field: {
+      pid: '',
+      fname: '',
+      lname: '',
+      phone: '',
+      sex: '',
+      imgUrl: '',
+      faculty: '',
+      department: '',
+      bdate: '',
+      email: '',
+    },
+    change: false,
     image: null,
     imgShow: null,
     facid: [],
@@ -159,12 +173,18 @@ export default {
     show1: false,
     show3: false,
   }),
+
+  computed: {
+    ...mapState({
+      login: (state) => state.login,
+    }),
+  },
   watch: {
     menu(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
 
-    fac(next) {
+    'field.faculty'(next) {
       getDepart(next).then((res) => {
         this.department = res.data.departmentlist.map((d) => ({
           text: d.dname,
@@ -191,6 +211,15 @@ export default {
       this.faculties = res.data.map((f) => ({ text: f.fname, value: f.fnum }))
       this.facid = res.data
     })
+    this.field.pid = this.login.pid
+    this.field.fname = this.login.fname
+    this.field.lname = this.login.lname
+    this.field.phone = this.login.phone
+    this.field.sex = this.login.sex
+    this.field.imgUrl = this.login.imgUrl
+    this.field.faculty = this.login.faculty.fname
+    this.field.department = this.login.department.dname
+    this.field.email = this.login.email
   },
   methods: {
     imgChange(e) {
@@ -201,12 +230,24 @@ export default {
         }
         this.image = e.target.files[0]
         reader.readAsDataURL(e.target.files[0])
+        this.change = true
       } else {
         this.imgShow = null
       }
     },
+    save(bdate) {
+      this.$refs.menu.save(this.field.bdate)
+    },
+    imgShoww(path) {
+      return `${process.env.ENDPOINT}/uploads/${path}`
+    },
+    dayjs,
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.data {
+  width: 70vw;
+}
+</style>

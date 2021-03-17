@@ -1,9 +1,13 @@
 <template>
-  <div class="lggin d-flex align-center justify-center"><Profile /></div>
+  <div class="prf d-flex align-center justify-center"><Profile /></div>
 </template>
 
 <script>
 export default {}
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.prf {
+  height: 100vh;
+}
+</style>

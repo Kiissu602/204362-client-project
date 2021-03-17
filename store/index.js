@@ -1,7 +1,7 @@
 export const state = () => ({
   login: {
     loggedIn: false,
-    PID: null,
+    pid: null,
     bdate: null,
     sex: null,
     username: null,
@@ -24,7 +24,7 @@ export const mutations = {
     // resetti
     state.login = {
       loggedIn: false,
-      PID: null,
+      pid: null,
       bdate: null,
       sex: null,
       username: null,

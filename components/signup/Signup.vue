@@ -2,7 +2,7 @@
   <v-form class="data">
     <div class="d-flex align-center justify-center">
       <label>
-        <v-card ripple max-height="150">
+        <v-card ripple height="150">
           <v-icon v-if="imgShow === null" size="150">mdi-plus</v-icon>
           <v-img
             v-else
@@ -24,26 +24,26 @@
         </v-col>
       </v-row>
     </div>
-    <v-divider light> </v-divider>
+    <v-divider />
     <v-row class="pt-6">
-      <v-col>
-        <v-menu
+      <v-col
+        ><v-menu
           ref="menu"
           v-model="menu"
           :close-on-content-click="false"
           transition="scale-transition"
           offset-y
-          min-width="290px"
+          min-width="auto"
         >
           <template #activator="{ on, attrs }">
             <v-text-field
               v-model="bdate"
               label="วันเกิด"
               append-icon="mdi-calendar"
-              readonly
-              v-bind="attrs"
               outlined
               dense
+              readonly
+              v-bind="attrs"
               v-on="on"
             ></v-text-field>
           </template>
@@ -52,7 +52,6 @@
             v-model="bdate"
             :max="new Date().toISOString().substr(0, 10)"
             min="1950-01-01"
-            outlined
             @change="save"
           ></v-date-picker>
         </v-menu>
@@ -132,9 +131,10 @@
 
 <script>
 import { getFaculty, getDepart } from '@/api/faculties'
+import dayjs from 'dayjs'
 export default {
   data: () => ({
-    bdate: '',
+    bdate: null,
     fac: '',
     dep: '',
     tel: '',
@@ -153,11 +153,8 @@ export default {
     show1: false,
     show3: false,
   }),
+  compute: {},
   watch: {
-    menu(val) {
-      val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
-    },
-
     fac(next) {
       getDepart(next).then((res) => {
         this.department = res.data.departmentlist.map((d) => ({
@@ -177,6 +174,9 @@ export default {
       } else {
         this.imgShow = null
       }
+    },
+    menu(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
   },
 
@@ -199,8 +199,16 @@ export default {
         this.imgShow = null
       }
     },
+    dayjs,
+    save(bdate) {
+      this.$refs.menu.save(bdate)
+    },
   },
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.data {
+  width: 70vw;
+}
+</style>

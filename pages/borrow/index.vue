@@ -1,5 +1,5 @@
 <template>
-  <div class="lggin d-flex align-center justify-center"><Signin /></div>
+  <div class="brr d-flex align-center justify-center"><Borrow /></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-.lggin {
+.brr {
   height: 100vh;
 }
 </style>

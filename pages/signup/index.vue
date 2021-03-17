@@ -38,8 +38,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .ind {
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 </style>

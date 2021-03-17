@@ -65,8 +65,10 @@
           suffix="บาท"
           outlined
           dense
-        ></v-text-field></v-col></v-row
-    ><v-row
+        ></v-text-field></v-col
+    ></v-row>
+
+    <v-row
       ><v-col
         ><v-textarea
           auto-grow
@@ -103,6 +105,20 @@ export default {
         }
         this.image = e
         reader.readAsDataURL(e)
+      } else {
+        this.imgShow = null
+      }
+    },
+  },
+  methods: {
+    imgChange(e) {
+      if (e.target.files[0]) {
+        const reader = new FileReader()
+        reader.onload = (re) => {
+          this.imgShow = re.target.result
+        }
+        this.image = e.target.files[0]
+        reader.readAsDataURL(e.target.files[0])
       } else {
         this.imgShow = null
       }
