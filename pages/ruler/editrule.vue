@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-center justify-center"><SearchMember /></div>
+  <div class="d-flex justify-center align-center"><EditRule /></div>
 </template>
 
 <script>

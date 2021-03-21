@@ -1,7 +1,7 @@
 import axios from './axios'
 
-export function postUser(obj) {
-  return axios.instance.post('/api/users', obj, {
+export function postMember(obj) {
+  return axios.instance.post('/api/members', obj, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

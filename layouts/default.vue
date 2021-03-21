@@ -14,7 +14,6 @@
           :key="i"
           :to="item.to"
           router
-          exact
           color="primary"
         >
           <v-list-item-action>
@@ -144,6 +143,7 @@ export default {
           { title: 'รายการจอง', to: '' },
           { title: 'รายการยืม', to: '/borrowlist' },
           { title: 'ประวัติการยืม', to: '' },
+           { title: 'ตรวจสอบผู้ใช้', to: '' },
         ],
         title: 'จัดการสมาชิก',
       },

@@ -3,7 +3,7 @@
     <v-card class="pa-4">
       <p class="title font-weight-bold">ลงชื่อเข้าใช้.</p>
       <v-text-field
-        v-model="usn"
+        v-model="email"
         label="อีเมล"
         outlined
         required
@@ -46,7 +46,7 @@ export default {
     try: false,
     errMsg: '',
     cntEnt: false,
-    usn: '',
+    email: '',
     pwd: '',
     show: false,
   }),
@@ -72,7 +72,7 @@ export default {
         return
       }
       this.try = true
-      login(this.$store, this.usn, this.pwd)
+      login(this.$store, this.email, this.pwd)
         .then((_) => {
           this.$router.push('/')
         })

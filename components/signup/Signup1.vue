@@ -154,9 +154,8 @@ export default {
       (v) => v.length <= 20 || 'ต้องไม่เกิน 20 ตัวอักษร',
     ],
     items: [
-      { text: 'นักศึกษา', value: 303 },
-      { text: 'อาจารย์', value: 202 },
-      { text: 'บุคคลากร', value: 404 },
+      { text: 'นักศึกษา', value: 1 },
+      { text: 'อาจารย์', value: 2 },
     ],
     jobRules: [
       (v) => !!v || 'กรุณาเลือก',

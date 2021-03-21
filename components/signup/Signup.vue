@@ -1,132 +1,171 @@
 <template>
-  <v-form class="data">
-    <div class="d-flex align-center justify-center">
-      <label>
-        <v-card ripple height="150">
-          <v-icon v-if="imgShow === null" size="150">mdi-plus</v-icon>
-          <v-img
-            v-else
-            height="150"
-            width="150"
-            :aspect-ratio="1"
-            :src="imgShow"
-          ></v-img>
-        </v-card>
-        <input type="file" style="display: none" @change="imgChange" />
-      </label>
-      <v-row>
-        <v-col>
-          <v-text-field class="pl-8 pt-4" outlined dense label="รหัส" />
-          <v-row class="py-4 pl-8">
-            <v-col><v-text-field outlined dense label="ชื่อ" /> </v-col>
-            <v-col><v-text-field outlined dense label="นามสกุล" /> </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </div>
-    <v-divider />
-    <v-row class="pt-6">
-      <v-col
-        ><v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          min-width="auto"
-        >
-          <template #activator="{ on, attrs }">
+  <v-card>
+    <v-form class="data pa-12">
+      <div class="d-flex align-center justify-center">
+        <label>
+          <v-card ripple height="150">
+            <v-icon v-if="imgShow === null" size="150">mdi-plus</v-icon
+            ><img
+              v-else
+              height="150"
+              width="150"
+              :aspect-ratio="1"
+              :src="imgShow"
+            />
+          </v-card>
+
+          <input
+            type="file"
+            style="display: none"
+            accept="image/png, image/jpg"
+            @change="imgChange"
+          />
+        </label>
+        <v-row>
+          <v-col>
             <v-text-field
-              v-model="bdate"
-              label="วันเกิด"
-              append-icon="mdi-calendar"
+              v-model="detail.memberID"
+              class="pl-8 pt-4"
               outlined
               dense
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            ref="picker"
-            v-model="bdate"
-            :max="new Date().toISOString().substr(0, 10)"
-            min="1950-01-01"
-            @change="save"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
-      <v-col
-        ><v-select :items="sexs" label="เพศ" dense outlined> </v-select
-      ></v-col>
-      <v-col
-        ><v-text-field v-model="tel" outlined dense label="โทรศัพท์"
-      /></v-col>
-    </v-row>
-    <v-row
-      ><v-col>
-        <v-autocomplete
-          v-model="fac"
-          label="สังกัด"
-          :items="faculties"
-          outlined
-          dense
-        ></v-autocomplete>
-      </v-col>
-      <v-col>
-        <v-autocomplete
-          v-model="dep"
-          label="สาขา"
-          :items="department"
-          outlined
-          dense
-        ></v-autocomplete>
-      </v-col>
-      <v-col>
-        <v-select
-          v-model="type"
-          :items="jobs"
-          label="อาชีพ"
-          outlined
-          dense
-        ></v-select> </v-col
-    ></v-row>
-    <v-row>
-      <v-col>
-        <v-text-field
-          v-model="email"
-          label="อีเมล"
-          outlined
-          dense
-        ></v-text-field
-      ></v-col>
-      <v-col
-        ><v-text-field
-          v-model="password"
-          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="show1 ? 'text' : 'password'"
-          label="รหัสผ่าน"
-          outlined
-          dense
-          @click:append="show1 = !show1"
-        ></v-text-field
-      ></v-col>
-      <v-col
-        ><v-text-field
-          v-model="cpassword"
-          :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="show3 ? 'text' : 'password'"
-          label="ยืนยันรหัสผ่าน"
-          outlined
-          dense
-          @click:append="show3 = !show3"
-        ></v-text-field
-      ></v-col>
-    </v-row>
-    <div class="d-flex justify-end">
-      <v-btn color="success"><v-icon left> mdi-check </v-icon> ยืนยัน </v-btn>
-    </div>
-  </v-form>
+              label="รหัส"
+              maxlength="9"
+              counter="9"
+            />
+            <v-row class="py-4 pl-8">
+              <v-col
+                ><v-text-field
+                  v-model="detail.firstName"
+                  outlined
+                  dense
+                  label="ชื่อ"
+                />
+              </v-col>
+              <v-col
+                ><v-text-field
+                  v-model="detail.lastName"
+                  outlined
+                  dense
+                  label="นามสกุล"
+                />
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </div>
+      <v-divider />
+      <v-row class="pt-6">
+        <v-col
+          ><v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template #activator="{ on, attrs }">
+              <v-text-field
+                v-model="detail.birthDate"
+                label="วันเกิด"
+                append-icon="mdi-calendar"
+                outlined
+                dense
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              ref="picker"
+              v-model="detail.birthDate"
+              :max="new Date().toISOString().substr(0, 10)"
+              min="1950-01-01"
+              @change="save"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-col
+          ><v-select :items="sexs" label="เพศ" dense outlined> </v-select
+        ></v-col>
+        <v-col
+          ><v-text-field v-model="tel" outlined dense label="โทรศัพท์"
+        /></v-col>
+      </v-row>
+      <v-row
+        ><v-col>
+          <v-autocomplete
+            v-model="detail.faculty"
+            label="สังกัด"
+            :items="faculties"
+            outlined
+            dense
+          ></v-autocomplete>
+        </v-col>
+        <v-col>
+          <v-autocomplete
+            v-if="!departments.length"
+            label="สาขา"
+            disabled
+            outlined
+            dense
+          ></v-autocomplete>
+          <v-autocomplete
+            v-else
+            v-model="detail.department"
+            label="สาขา"
+            :items="departments"
+            outlined
+            dense
+          ></v-autocomplete>
+        </v-col>
+        <v-col>
+          <v-select
+            v-model="detail.type"
+            :items="jobs"
+            label="อาชีพ"
+            outlined
+            dense
+          ></v-select> </v-col
+      ></v-row>
+      <v-row>
+        <v-col>
+          <v-text-field
+            v-model="detail.email"
+            label="อีเมล"
+            outlined
+            :suffix="suff"
+            dense
+          ></v-text-field
+        ></v-col>
+        <v-col
+          ><v-text-field
+            v-model="detail.password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show1 ? 'text' : 'password'"
+            label="รหัสผ่าน"
+            outlined
+            dense
+            @click:append="show1 = !show1"
+          ></v-text-field
+        ></v-col>
+        <v-col
+          ><v-text-field
+            v-model="cpassword"
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show3 ? 'text' : 'password'"
+            label="ยืนยันรหัสผ่าน"
+            outlined
+            dense
+            @click:append="show3 = !show3"
+          ></v-text-field
+        ></v-col>
+      </v-row>
+      <div class="d-flex justify-end">
+        <v-btn color="success"><v-icon left> mdi-check </v-icon> ยืนยัน </v-btn>
+      </div>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -134,42 +173,53 @@ import { getFaculty, getDepart } from '@/api/faculties'
 import dayjs from 'dayjs'
 export default {
   data: () => ({
-    bdate: null,
-    fac: '',
-    dep: '',
-    tel: '',
-    type: '',
-    email: '',
-    password: '',
+    detail: {
+      image: null,
+      memberId: '',
+      firstName: '',
+      lastName: '',
+      birthDate: null,
+      sex: '',
+      phone: '',
+      faculty: '',
+      department: '',
+      type: '',
+      email: '',
+      password: '',
+    },
     cpassword: '',
-    image: null,
+    suff: '@gmail.com',
     imgShow: null,
     facid: [],
     faculties: [],
-    department: [],
-    jobs: ['นักศึกษา', 'อาจารย์', 'บุคลากร'],
-    sexs: ['ชาย', 'หญิง', 'ไม่ระบุ'],
+    departments: [],
+    sexs: ['ชาย', 'หญิง'],
+    jobs: [
+      { text: 'นักศึกษา', value: 1 },
+      { text: 'อาจารย์', value: 2 },
+    ],
     menu: false,
     show1: false,
     show3: false,
   }),
   compute: {},
   watch: {
-    fac(next) {
+    'detail.faculty'(next) {
       getDepart(next).then((res) => {
-        this.department = res.data.departmentlist.map((d) => ({
-          text: d.dname,
-          value: d.dnum,
+        this.departments = res.data.departmentlist.map((d) => ({
+          text: d.departmentName,
+          value: d.departmentID,
         }))
       })
+      console.log(this.departments)
     },
-    image(e) {
+    'detail.image'(e) {
       if (e) {
         const reader = new FileReader()
         reader.onload = (re) => {
           this.imgShow = re.target.result
         }
-        this.image = e
+        this.detail.image = e
         reader.readAsDataURL(e)
       } else {
         this.imgShow = null
@@ -182,7 +232,10 @@ export default {
 
   mounted() {
     getFaculty().then((res) => {
-      this.faculties = res.data.map((f) => ({ text: f.fname, value: f.fnum }))
+      this.faculties = res.data.map((f) => ({
+        text: f.facultyName,
+        value: f.facultyID,
+      }))
       this.facid = res.data
     })
   },
@@ -193,7 +246,7 @@ export default {
         reader.onload = (re) => {
           this.imgShow = re.target.result
         }
-        this.image = e.target.files[0]
+        this.detail.image = e.target.files[0]
         reader.readAsDataURL(e.target.files[0])
       } else {
         this.imgShow = null
@@ -210,5 +263,9 @@ export default {
 <style lang="scss" scoped>
 .data {
   width: 70vw;
+}
+.plus {
+  height: 150;
+  width: 150;
 }
 </style>

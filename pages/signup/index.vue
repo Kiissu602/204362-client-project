@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { postUser } from '@/api/user'
+import { postMember } from '@/api/member'
 export default {
   data: () => ({
     pg: 1,
@@ -32,7 +32,7 @@ export default {
       for (const key in this.data2) {
         formData.append(key, this.data2[key])
       }
-      postUser(formData).then((res) => this.$router.push('/'))
+      postMember(formData).then((res) => this.$router.push('/'))
     },
   },
 }
