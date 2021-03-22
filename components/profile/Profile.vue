@@ -1,5 +1,5 @@
 <template>
-  <v-card lass="ca d-flex justify-center">
+  <v-card lass="ca d-flex justify-center" min-width="300">
     <div class="profile d-flex justify-center ma-6">
       <v-card class="ml-4" max-height="150"
         ><v-img

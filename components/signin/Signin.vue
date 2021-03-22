@@ -8,6 +8,7 @@
         outlined
         required
         type="text"
+        suffix="@gmail.com"
         dense
       ></v-text-field>
       <v-text-field

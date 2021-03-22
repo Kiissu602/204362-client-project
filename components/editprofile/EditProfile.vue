@@ -15,7 +15,7 @@
       <v-row>
         <v-col>
           <v-text-field
-            v-model="field.pid"
+            v-model="field.memberID"
             class="pl-8 pt-4"
             disabled
             outlined
@@ -25,7 +25,7 @@
           <v-row class="py-4 pl-8">
             <v-col
               ><v-text-field
-                v-model="field.fname"
+                v-model="field.firstName"
                 outlined
                 dense
                 label="ชื่อ"
@@ -33,7 +33,7 @@
             </v-col>
             <v-col
               ><v-text-field
-                v-model="field.lname"
+                v-model="field.lastName"
                 outlined
                 dense
                 label="นามสกุล"
@@ -56,7 +56,7 @@
         >
           <template #activator="{ on, attrs }">
             <v-text-field
-              v-model="field.bdate"
+              v-model="field.birthDate"
               label="วันเกิด"
               append-icon="mdi-calendar"
               outlined
@@ -68,7 +68,7 @@
           </template>
           <v-date-picker
             ref="picker"
-            v-model="field.bdate"
+            v-model="field.birthDate"
             :max="new Date().toISOString().substr(0, 10)"
             min="1950-01-01"
             @change="save"
@@ -103,19 +103,27 @@
         ></v-autocomplete>
       </v-col>
       <v-col>
-        <v-select :items="jobs" label="อาชีพ" outlined dense></v-select> </v-col
+        <v-select
+          v-model="field.jobs"
+          :items="jobs"
+          label="อาชีพ"
+          outlined
+          dense
+        ></v-select> </v-col
     ></v-row>
     <v-row>
       <v-col>
         <v-text-field
           v-model="field.email"
           label="อีเมล"
+          suffix="@gmail.com"
           outlined
           dense
         ></v-text-field
       ></v-col>
       <v-col
         ><v-text-field
+          v-model="field.password"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show1 ? 'text' : 'password'"
           label="รหัสผ่าน"
@@ -136,7 +144,7 @@
       ></v-col>
     </v-row>
     <div class="d-flex justify-end">
-      <v-btn color="success"
+      <v-btn color="success" @click="edit"
         ><v-icon left> mdi-content-save-outline </v-icon> บันทึก
       </v-btn>
     </div>
@@ -147,19 +155,22 @@
 import dayjs from 'dayjs'
 import { mapState } from 'vuex'
 import { getFaculty, getDepart } from '@/api/faculties'
+
 export default {
   data: () => ({
     field: {
-      pid: '',
-      fname: '',
-      lname: '',
-      phone: '',
+      image: null,
+      memberID: '',
+      firstName: '',
+      lastName: '',
+      birthDate: '',
       sex: '',
-      imgUrl: '',
+      phone: '',
       faculty: '',
       department: '',
-      bdate: '',
+      job: '',
       email: '',
+      password: '',
     },
     change: false,
     image: null,
@@ -167,8 +178,11 @@ export default {
     facid: [],
     faculties: [],
     department: [],
-    jobs: ['นักศึกษา', 'อาจารย์', 'บุคลากร'],
-    sexs: ['ชาย', 'หญิง', 'ไม่ระบุ'],
+    jobs: [
+      { text: 'นักศึกษา', value: 2 },
+      { text: 'บุคลากร', value: 3 },
+    ],
+    sexs: ['ชาย', 'หญิง'],
     menu: false,
     show1: false,
     show3: false,
@@ -187,8 +201,8 @@ export default {
     'field.faculty'(next) {
       getDepart(next).then((res) => {
         this.department = res.data.departmentlist.map((d) => ({
-          text: d.dname,
-          value: d.dnum,
+          text: d.departmentName,
+          value: d.departmentID,
         }))
       })
     },
@@ -208,18 +222,25 @@ export default {
 
   mounted() {
     getFaculty().then((res) => {
-      this.faculties = res.data.map((f) => ({ text: f.fname, value: f.fnum }))
+      this.faculties = res.data.map((f) => ({
+        text: f.facultyName,
+        value: f.facultyID,
+      }))
       this.facid = res.data
     })
-    this.field.pid = this.login.pid
-    this.field.fname = this.login.fname
-    this.field.lname = this.login.lname
-    this.field.phone = this.login.phone
+
+    this.field.memberID = this.login.memberID
+    this.field.firstName = this.login.firstName
+    this.field.lastName = this.login.lastName
     this.field.sex = this.login.sex
-    this.field.imgUrl = this.login.imgUrl
-    this.field.faculty = this.login.faculty.fname
-    this.field.department = this.login.department.dname
+    this.field.phone = this.login.phone
     this.field.email = this.login.email
+    this.field.password = this.login.password
+    this.field.faculty = this.login.faculty.facultyID
+    this.field.department = this.login.department.departmentID
+    this.field.job = this.login.job.jobID
+    this.field.birthDate = this.login.birthDate.substr(0, 10)
+    console.log(this.field)
   },
   methods: {
     imgChange(e) {
@@ -242,6 +263,9 @@ export default {
       return `${process.env.ENDPOINT}/uploads/${path}`
     },
     dayjs,
+    edit() {
+      this.$emit('field', this.field)
+    },
   },
 }
 </script>

@@ -7,7 +7,7 @@
     <v-row>
       <v-col class="text-left pa-0" sm="2">วันเกิด:</v-col>
       <v-col class="text-left pa-0">{{
-        dayjs(detail.bdate).format('DD/MM/BBBB')
+        dayjs(detail.birthDate).format('DD/MM/BBBB')
       }}</v-col>
     </v-row>
     <v-row>
@@ -20,15 +20,17 @@
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">คณะ:</v-col>
-      <v-col class="text-left pa-0">{{ detail.faculty.fname }}</v-col>
+      <v-col class="text-left pa-0">{{ detail.faculty.facultyName }}</v-col>
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">สาขา:</v-col>
-      <v-col class="text-left pa-0">{{ detail.department.dname }}</v-col>
+      <v-col class="text-left pa-0">{{
+        detail.department.departmentName
+      }}</v-col>
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">อีเมล:</v-col>
-      <v-col class="text-left pa-0">{{ detail.email }}</v-col>
+      <v-col class="text-left pa-0">{{ detail.email }}@gmail.com</v-col>
     </v-row>
   </v-container>
 </template>
@@ -42,7 +44,7 @@ export default {
   },
   computed: {
     text() {
-      return `${this.detail.fname} ${this.detail.lname}`
+      return `${this.detail.firstName} ${this.detail.lastName}`
     },
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div class="ind d-flex align-center justify-center">
-    <Signup />
+    <Signup @regist="submit" />
   </div>
 </template>
 
@@ -8,29 +8,15 @@
 import { postMember } from '@/api/member'
 export default {
   data: () => ({
-    pg: 1,
     data: {},
-    data2: {},
+    field: {},
   }),
   methods: {
-    next(obj) {
-      this.data = obj
-      this.pg = 2
-    },
-    back(data) {
-      this.pg = 1
-    },
-    submit(field) {
-      this.data2 = field
-
+    submit(regist) {
+      this.data = regist
       const formData = new FormData()
-
       for (const key in this.data) {
         formData.append(key, this.data[key])
-      }
-
-      for (const key in this.data2) {
-        formData.append(key, this.data2[key])
       }
       postMember(formData).then((res) => this.$router.push('/'))
     },

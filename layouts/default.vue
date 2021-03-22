@@ -23,7 +23,7 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
-        <div v-if="login.type === 'Admin'">
+        <div v-if="login.job.jobName === 'Librarian'">
           <v-list-group
             v-for="item in lgnd"
             :key="item.title"
@@ -143,7 +143,7 @@ export default {
           { title: 'รายการจอง', to: '' },
           { title: 'รายการยืม', to: '/borrowlist' },
           { title: 'ประวัติการยืม', to: '' },
-           { title: 'ตรวจสอบผู้ใช้', to: '' },
+          { title: 'ตรวจสอบผู้ใช้', to: '' },
         ],
         title: 'จัดการสมาชิก',
       },

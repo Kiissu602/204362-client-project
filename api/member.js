@@ -7,3 +7,10 @@ export function postMember(obj) {
     },
   })
 }
+export function putMember(obj) {
+  return axios.instance.put('/api/members', obj, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+}

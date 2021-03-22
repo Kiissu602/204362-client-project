@@ -8,15 +8,15 @@ export const createInstance = ({ store }) => {
     baseURL: process.env.endpoint,
   })
 
-  // instance.interceptors.request.use((config) => {
-  //   if (store.state.user.data) {
-  //     config.headers = {
-  //       Authorization: `Bearer ${store.state.user.data.token}`,
-  //     }
-  //   }
+  instance.interceptors.request.use((config) => {
+    if (store.state.login) {
+      config.headers = {
+        Authorization: `Bearer ${store.state.login.token}`,
+      }
+    }
 
-  //   return config
-  // })
+    return config
+  })
 
   axios.instance = instance
 }

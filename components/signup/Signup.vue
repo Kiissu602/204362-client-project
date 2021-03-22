@@ -17,7 +17,7 @@
           <input
             type="file"
             style="display: none"
-            accept="image/png, image/jpg"
+            accept="image/png, image/jpeg"
             @change="imgChange"
           />
         </label>
@@ -86,10 +86,17 @@
           </v-menu>
         </v-col>
         <v-col
-          ><v-select :items="sexs" label="เพศ" dense outlined> </v-select
+          ><v-select
+            v-model="detail.sex"
+            :items="sexs"
+            label="เพศ"
+            dense
+            outlined
+          >
+          </v-select
         ></v-col>
         <v-col
-          ><v-text-field v-model="tel" outlined dense label="โทรศัพท์"
+          ><v-text-field v-model="detail.phone" outlined dense label="โทรศัพท์"
         /></v-col>
       </v-row>
       <v-row
@@ -121,7 +128,7 @@
         </v-col>
         <v-col>
           <v-select
-            v-model="detail.type"
+            v-model="detail.job"
             :items="jobs"
             label="อาชีพ"
             outlined
@@ -162,7 +169,9 @@
         ></v-col>
       </v-row>
       <div class="d-flex justify-end">
-        <v-btn color="success"><v-icon left> mdi-check </v-icon> ยืนยัน </v-btn>
+        <v-btn color="success" @click="regist"
+          ><v-icon left> mdi-check </v-icon> ยืนยัน
+        </v-btn>
       </div>
     </v-form>
   </v-card>
@@ -175,7 +184,7 @@ export default {
   data: () => ({
     detail: {
       image: null,
-      memberId: '',
+      memberID: '',
       firstName: '',
       lastName: '',
       birthDate: null,
@@ -183,7 +192,7 @@ export default {
       phone: '',
       faculty: '',
       department: '',
-      type: '',
+      job: '',
       email: '',
       password: '',
     },
@@ -195,8 +204,8 @@ export default {
     departments: [],
     sexs: ['ชาย', 'หญิง'],
     jobs: [
-      { text: 'นักศึกษา', value: 1 },
-      { text: 'อาจารย์', value: 2 },
+      { text: 'นักศึกษา', value: 2 },
+      { text: 'บุคลากร', value: 3 },
     ],
     menu: false,
     show1: false,
@@ -211,7 +220,6 @@ export default {
           value: d.departmentID,
         }))
       })
-      console.log(this.departments)
     },
     'detail.image'(e) {
       if (e) {
@@ -255,6 +263,9 @@ export default {
     dayjs,
     save(bdate) {
       this.$refs.menu.save(bdate)
+    },
+    regist() {
+      this.$emit('regist', this.detail)
     },
   },
 }

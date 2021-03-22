@@ -1,16 +1,17 @@
 export const state = () => ({
   login: {
     loggedIn: false,
-    pid: null,
-    bdate: null,
+    imgUrl: null,
+    memberID: null,
+    firstName: null,
+    lastName: null,
+    birthDate: null,
     sex: null,
-    type: null,
+    phone: null,
     faculty: null,
     department: null,
-    token: null,
-    phone: null,
+    job: null,
     email: null,
-    imgUrl: null,
   },
 })
 
@@ -20,19 +21,19 @@ export const mutations = {
     localStorage.setItem('mm-login', JSON.stringify(state.login))
   },
   LOGOUT(state) {
-    // resetti
     state.login = {
       loggedIn: false,
-      pid: null,
-      bdate: null,
+      imgUrl: null,
+      memberID: null,
+      firstName: null,
+      lastName: null,
+      birthDate: null,
       sex: null,
-      type: null,
+      phone: null,
       faculty: null,
       department: null,
-      token: null,
-      phone: null,
+      job: null,
       email: null,
-      imgUrl: null,
     }
     localStorage.removeItem('mm-login')
   },
