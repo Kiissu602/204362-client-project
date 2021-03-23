@@ -170,8 +170,9 @@ export default {
       department: '',
       job: '',
       email: '',
-      password: '',
+      password: null,
     },
+    member: {},
     change: false,
     image: null,
     imgShow: null,
@@ -228,7 +229,6 @@ export default {
       }))
       this.facid = res.data
     })
-
     this.field.memberID = this.login.memberID
     this.field.firstName = this.login.firstName
     this.field.lastName = this.login.lastName
@@ -240,7 +240,6 @@ export default {
     this.field.department = this.login.department.departmentID
     this.field.job = this.login.job.jobID
     this.field.birthDate = this.login.birthDate.substr(0, 10)
-    console.log(this.field)
   },
   methods: {
     imgChange(e) {

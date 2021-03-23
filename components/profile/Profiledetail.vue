@@ -1,6 +1,10 @@
 <template>
   <v-container class="det pl-14">
     <v-row>
+      <v-col class="text-left pa-0" sm="2">รหัส:</v-col>
+      <v-col class="text-left pa-0">{{ memberId }}</v-col>
+    </v-row>
+    <v-row>
       <v-col class="text-left pa-0" sm="2">ชื่อ:</v-col>
       <v-col class="text-left pa-0">{{ text }}</v-col>
     </v-row>
@@ -37,15 +41,33 @@
 
 <script>
 import dayjs from 'dayjs'
-
+import { getMemberByID } from '@/api/member'
 export default {
   props: {
-    detail: Object,
+    memberId: String,
   },
+  data: () => ({
+    detail: {
+      memberId: '',
+      firstName: '',
+      lastName: '',
+      birthDate: '',
+      sex: '',
+      faculty: '',
+      department: '',
+      email: '',
+    },
+  }),
+
   computed: {
     text() {
       return `${this.detail.firstName} ${this.detail.lastName}`
     },
+  },
+  mounted() {
+    getMemberByID(this.memberId).then((res) => {
+      this.detail = res.data
+    })
   },
   methods: {
     dayjs,

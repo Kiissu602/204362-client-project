@@ -41,7 +41,8 @@
       <v-row class="pt-6"
         ><v-col
           ><v-select
-            :items="bookType"
+            v-model="catagory"
+            :items="categories"
             label="ประเภทหนังสือ"
             outlined
             dense
@@ -103,12 +104,14 @@
 </template>
 
 <script>
+import { getCategory } from '@/api/category'
 export default {
   data: () => ({
     image: null,
     imgShow: null,
+    catagory: '',
     date: '',
-    bookType: ['ยังไม่มี'],
+    categories: [],
   }),
   watch: {
     image(e) {
@@ -123,6 +126,14 @@ export default {
         this.imgShow = null
       }
     },
+  },
+  mounted() {
+    getCategory().then((res) => {
+      this.categories = res.data.map((c) => ({
+        text: c.categoryName,
+        value: c.categoryID,
+      }))
+    })
   },
   methods: {
     imgChange(e) {

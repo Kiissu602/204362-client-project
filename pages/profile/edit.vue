@@ -15,7 +15,9 @@ export default {
       this.data = field
       const formData = new FormData()
       for (const key in this.data) {
-        formData.append(key, this.data[key])
+        if (key != null) {
+          formData.append(key, this.data[key])
+        }
       }
       putMember(formData).then((res) => this.$router.push('/profile'))
     },

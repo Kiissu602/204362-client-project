@@ -8,7 +8,7 @@
           width="150"
           :aspect-ratio="1"
       /></v-card>
-      <ProfileDetail :detail="login" />
+      <ProfileDetail :memberId="login.memberID" />
     </div>
     <div class="d-flex justify-end ma-4">
       <ProfileEditButton />

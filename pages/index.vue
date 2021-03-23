@@ -1,15 +1,49 @@
 <template>
   <v-container class="idx">
-    <h1 class="text-h5 text-center mt-12">ค้นหาหนังสือ</h1>
-    <div class="search mt-4">
-      <v-text-field
-        v-model="search"
-        outlined
-        append-icon="mdi-magnify"
-        dense
-        placeholder="ตัวอย่าง ภาคินัย, Sofa publishing"
-      ></v-text-field>
-    </div>
+    <v-card class="mt-4">
+      <h1 class="text-h5 text-center pt-4">ค้นหาหนังสือ</h1>
+      <div class="pt-8 px-12 pb-8">
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="isbn"
+              outlined
+              dense
+              label="ISBN"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="title"
+              outlined
+              dense
+              label="ชื่อหนังสือ"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="writer"
+              outlined
+              dense
+              label="ผู้แต่ง"
+            ></v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="title"
+              outlined
+              dense
+              label="สำนักพิมพ์"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <div class="d-flex justify-center">
+          <v-btn color="primary">ค้นหา</v-btn>
+        </div>
+      </div>
+    </v-card>
     <kinesis-container class="parent">
       <kinesis-element class="b book1" type="depth" :strength="10" />
       <kinesis-element class="b book2" type="depth" :strength="10" />

@@ -14,3 +14,6 @@ export function putMember(obj) {
     },
   })
 }
+export function getMemberByID(id) {
+  return axios.instance.get(`/api/members/${id}`)
+}

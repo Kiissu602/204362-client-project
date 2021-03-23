@@ -23,7 +23,7 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
-        <div v-if="login.job.jobName === 'Librarian'">
+        <div v-if="login.job && login.job.jobName === 'Librarian'">
           <v-list-group
             v-for="item in lgnd"
             :key="item.title"
