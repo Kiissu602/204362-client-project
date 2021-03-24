@@ -10,11 +10,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in rules" :key="item.type">
-          <td class="text-center">{{ item.type }}</td>
-          <td class="text-center">{{ item.num }}</td>
-          <td class="text-center">{{ item.day }}</td>
-          <td class="text-center">{{ item.booking }}</td>
+        <tr>
+          <td class="text-center">นักศึกษา</td>
+          <td class="text-center">{{ student.amount }}</td>
+          <td class="text-center">{{ student.limitDayBorrow }}</td>
+          <td class="text-center">{{ student.limitDayBooking }}</td>
+        </tr>
+        <tr>
+          <td class="text-center">บุคลากร</td>
+          <td class="text-center">{{ staff.amount }}</td>
+          <td class="text-center">{{ staff.limitDayBorrow }}</td>
+          <td class="text-center">{{ staff.limitDayBooking }}</td>
         </tr>
       </tbody>
     </table>
@@ -23,12 +29,11 @@
 
 <script>
 export default {
-  data: () => ({
-    rules: [
-      { type: 'นักศึกษา', num: 5, day: 7, booking: 8 },
-      { type: 'บุคลากร', num: 7, day: 14, booking: 15 },
-    ],
-  }),
+  props: {
+    student: Object,
+    staff: Object,
+  },
+  data: () => ({}),
 }
 </script>
 

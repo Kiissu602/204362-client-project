@@ -24,13 +24,11 @@
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">คณะ:</v-col>
-      <v-col class="text-left pa-0">{{ detail.faculty.facultyName }}</v-col>
+      <v-col class="text-left pa-0">{{ detail.facultyName }}</v-col>
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">สาขา:</v-col>
-      <v-col class="text-left pa-0">{{
-        detail.department.departmentName
-      }}</v-col>
+      <v-col class="text-left pa-0">{{ detail.departmentName }}</v-col>
     </v-row>
     <v-row>
       <v-col class="text-left pa-0" sm="2">อีเมล:</v-col>

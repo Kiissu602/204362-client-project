@@ -21,6 +21,9 @@
         dense
         @click:append="show = !show"
       ></v-text-field>
+      <p v-if="err" class="error--text text-center text-subtitle-2">
+        อีเมลหรือรหัสผ่านไม่ถูกต้อง
+      </p>
       <v-btn class="sm justify-center" color="primary" type="submit" block>
         ยืนยัน
       </v-btn>
@@ -45,7 +48,7 @@ import { login } from '@/api/login'
 export default {
   data: () => ({
     try: false,
-    errMsg: '',
+    err: false,
     cntEnt: false,
     email: '',
     pwd: '',
@@ -79,7 +82,9 @@ export default {
         })
         .catch((reason) => {
           this.try = false
-          if (reason.response) this.errMsg = reason.response.data.message
+          if (reason.response.status === 404) {
+            this.err = true
+          }
         })
     },
   },
