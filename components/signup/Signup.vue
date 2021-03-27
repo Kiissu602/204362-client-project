@@ -39,6 +39,7 @@
                   outlined
                   dense
                   label="ชื่อ"
+                  required
                 />
               </v-col>
               <v-col

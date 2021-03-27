@@ -14,7 +14,6 @@ export const createInstance = ({ store }) => {
         Authorization: `Bearer ${store.state.login.token}`,
       }
     }
-
     return config
   })
 

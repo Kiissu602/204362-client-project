@@ -14,7 +14,7 @@
       stop="15:00"
       first="12:00"
       second="16.30"
-      day="2"
+      :day="student.getBook"
     />
     <Rulersss
       class="pa-2 ml-10"
@@ -35,6 +35,7 @@ export default {
       limitDayBorrow: '',
       lostFines: '',
       returnFines: '',
+      getBook: '',
     },
     staff: {
       amount: '',
@@ -42,6 +43,7 @@ export default {
       limitDayBorrow: '',
       lostFines: '',
       returnFines: '',
+      getBook: '',
     },
   }),
   computed: {
