@@ -23,7 +23,12 @@ export default {
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['./plugins/api', './plugins/day-js', './plugins/vue-kinesis.js'],
+  plugins: [
+    './plugins/api',
+    './plugins/day-js',
+    './plugins/vue-kinesis.js',
+    '~/plugins/persistedState.client.js',
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

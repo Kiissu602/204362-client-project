@@ -46,14 +46,14 @@ export default {
   },
   data: () => ({
     detail: {
-      memberId: '',
-      firstName: '',
-      lastName: '',
-      birthDate: '',
-      sex: '',
-      faculty: '',
-      department: '',
-      email: '',
+      memberId: '610777777',
+      firstName: 'พรประภา',
+      lastName: 'ฮาเอเกด',
+      birthDate: '1/2/3456',
+      sex: 'ชายงับ',
+      faculty: '1',
+      department: '2',
+      email: 'eee@gmail.com',
     },
   }),
 

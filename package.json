@@ -18,7 +18,9 @@
     "dayjs": "^1.10.4",
     "jsconfig.json": "^0.1.0-beta.3",
     "nuxt": "^2.14.12",
-    "vue-kinesis": "^1.2.3"
+    "vue-kinesis": "^1.2.3",
+    "vue-truncate-filter": "^1.1.7",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",

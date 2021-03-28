@@ -16,13 +16,14 @@
           <input
             type="file"
             style="display: none"
-            accept="image/png, image/jpg"
+            accept="image/png, image/jpeg"
             @change="imgChange"
           />
         </label>
         <v-row>
           <v-col>
             <v-text-field
+              v-model="book.ISBN"
               class="pl-8 pt-12"
               outlined
               dense
@@ -32,7 +33,12 @@
             />
             <v-row class="py-4 pl-8">
               <v-col
-                ><v-text-field outlined dense label="ชื่อหนังสือ" />
+                ><v-text-field
+                  v-model="book.title"
+                  outlined
+                  dense
+                  label="ชื่อหนังสือ"
+                />
               </v-col>
             </v-row>
           </v-col>
@@ -41,7 +47,7 @@
       <v-row class="pt-6"
         ><v-col
           ><v-select
-            v-model="catagory"
+            v-model="book.categoryID"
             :items="categories"
             label="ประเภทหนังสือ"
             outlined
@@ -49,13 +55,22 @@
           ></v-select
         ></v-col>
         <v-col
-          ><v-text-field outlined dense label="ชื่อผู้แต่ง/นามปากกา" /></v-col
-        ><v-col><v-text-field outlined dense label="สำนักพิมพ์" /></v-col
+          ><v-text-field
+            v-model="book.writerName"
+            outlined
+            dense
+            label="ชื่อผู้แต่ง/นามปากกา" /></v-col
+        ><v-col
+          ><v-text-field
+            v-model="book.publisherName"
+            outlined
+            dense
+            label="สำนักพิมพ์" /></v-col
       ></v-row>
       <v-row
         ><v-col>
           <v-text-field
-            v-model="date"
+            v-model="book.publicationDate"
             label="ปีที่พิมพ์(พ.ศ.)"
             append-icon="mdi-calendar"
             outlined
@@ -67,18 +82,21 @@
           ><v-row
             ><v-col
               ><v-text-field
+                v-model="book.edition"
                 label="ฉบับที่พิมพ์"
                 outlined
                 dense
               ></v-text-field></v-col
             ><v-col
               ><v-text-field
+                v-model="book.pagination"
                 label="จำนวนหน้า"
                 outlined
                 dense
               ></v-text-field></v-col></v-row></v-col
         ><v-col
           ><v-text-field
+            v-model="book.price"
             label="ราคา"
             suffix="บาท"
             outlined
@@ -89,6 +107,7 @@
       <v-row
         ><v-col
           ><v-textarea
+            v-model="book.plot"
             auto-grow
             outlined
             label="เรื่องย่อ"
@@ -96,21 +115,30 @@
           ></v-textarea></v-col
       ></v-row>
       <div class="d-flex justify-end align-center">
-        <v-btn class="mr-4" color="secondary" outlined>ยกเลิก</v-btn>
-        <v-btn color="success">เพิ่ม</v-btn>
+        <v-btn color="success" @click="add">เพิ่ม</v-btn>
       </div>
     </v-form>
   </v-card>
 </template>
 
 <script>
-import { getCategory } from '@/api/category'
+import { getCategory } from '@/api/book'
 export default {
   data: () => ({
-    image: null,
+    book: {
+      image: null,
+      ISBN: null,
+      title: null,
+      publisherName: null,
+      publicationDate: null,
+      edition: null,
+      pagination: null,
+      price: null,
+      plot: null,
+      categoryID: null,
+      writerName: null,
+    },
     imgShow: null,
-    catagory: '',
-    date: '',
     categories: [],
   }),
   watch: {
@@ -120,7 +148,7 @@ export default {
         reader.onload = (re) => {
           this.imgShow = re.target.result
         }
-        this.image = e
+        this.book.image = e
         reader.readAsDataURL(e)
       } else {
         this.imgShow = null
@@ -142,11 +170,14 @@ export default {
         reader.onload = (re) => {
           this.imgShow = re.target.result
         }
-        this.image = e.target.files[0]
+        this.book.image = e.target.files[0]
         reader.readAsDataURL(e.target.files[0])
       } else {
         this.imgShow = null
       }
+    },
+    add() {
+      this.$emit('add', this.book)
     },
   },
 }
