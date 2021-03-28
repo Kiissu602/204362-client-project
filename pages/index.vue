@@ -45,9 +45,13 @@
         </div>
       </div>
     </v-card>
-    <div v-for="item in books" :key="item" class="pa-12">
-      <div class="d-flex justify-center" width="700">
-        <v-card ripple hover
+    <v-row v-for="item in books" :key="item" class="pa-12">
+      <v-col class="d-flex justify-center" width="700">
+        <v-card
+          ripple
+          hover
+          link
+          :to="{ name: 'book', params: { id: item.isbn } }"
           ><div class="d-flex align-center">
             <div>
               <v-img
@@ -56,20 +60,38 @@
                 :aspect-ratio="1"
               ></v-img>
             </div>
-            <div class="detail">
-              <v-card-title>ชื่อหนังสือ: {{ item.title }}</v-card-title>
-              <v-card-text>ผู้แต่ง: {{ item.writer }}</v-card-text>
-              <v-card-text>สำนักพิมพ์: {{ item.publisherName }}</v-card-text>
-              <span class="text-body-2" max-length="100"
-                >เรื่องย่อ: {{ item.plot | truncate(100) }}
-              </span>
-            </div>
+            <v-col>
+              <v-row dense>
+                <v-col class="col-3 text-h6"> ชื่อหนังสือ:</v-col>
+                <v-col class="text-h6">
+                  {{ item.title }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="col-3 text-subtitle-2"> ผู้แต่ง:</v-col>
+                <v-col class="text-subtitle-2">
+                  {{ item.writer }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="col-3 text-subtitle-2"> สำนักพิมพ์:</v-col>
+                <v-col class="text-subtitle-2">
+                  {{ item.publisherName }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="col-3 text-subtitle-2"> เรื่องย่อ:</v-col>
+                <v-col class="plot text-subtitle-2 text-truncate">
+                  {{ item.plot }}
+                </v-col>
+              </v-row>
+            </v-col>
           </div>
         </v-card>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
 
-    <kinesis-container class="parent">
+    <kinesis-container v-if="!books.length" class="parent">
       <kinesis-element class="b book1" type="depth" :strength="10" />
       <kinesis-element class="b book2" type="depth" :strength="10" />
       <kinesis-element class="b book3" type="depth" :strength="20" />
@@ -88,7 +110,7 @@
 
 <script>
 import { KinesisContainer, KinesisElement } from 'vue-kinesis'
-import { getBook } from '@/api/book'
+import { getBookByID } from '@/api/book'
 export default {
   filters: {
     img(path) {
@@ -116,7 +138,7 @@ export default {
     search() {
       if (this.detail.isbn.length === 13) {
         this.books = []
-        getBook(this.detail.isbn).then((res) => {
+        getBookByID(this.detail.isbn).then((res) => {
           res.data.writer = res.data.writer.join(', ')
           this.books.push(res.data)
         })
@@ -128,7 +150,8 @@ export default {
 
 <style lang="scss" scoped>
 .plot {
-  max-width: 50px;
+  flex: 1;
+  max-width: 500px;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;

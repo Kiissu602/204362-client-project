@@ -47,7 +47,10 @@ export default {
         book.append(key, this.data[key])
       }
       await postBook(book)
-        .then((res) => (this.dialog = true))
+        .then((res) => {
+          this.dialog = true
+          this.messege = reason[this.err]
+        })
         .catch((error) => {
           this.err = error.response.data.msg
           this.messege = reason[this.err]
