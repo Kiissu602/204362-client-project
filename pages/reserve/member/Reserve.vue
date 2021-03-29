@@ -70,8 +70,8 @@
       </v-col>
       <v-col cols="2">
         <v-select
-          :items="สถานที่"
-          label="palce"
+          :items="place"
+          label="สถานที่"
           outlined
         ></v-select>
       </v-col>
@@ -82,8 +82,8 @@
       </v-col>
       <v-col cols="2">
           <v-text-field
-            label="Solo"
-            placeholder="090987651"
+            label="090987651"
+            placeholder=""
             solo
           ></v-text-field>
         </v-col>
