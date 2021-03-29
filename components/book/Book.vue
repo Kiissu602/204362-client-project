@@ -69,7 +69,12 @@
           v-if="login.job && login.job.jobName === 'Librarian'"
           class="d-flex justify-end align-center"
         >
-          <v-btn class="primary" to="book/editbook">แก้ไข</v-btn>
+          <v-btn
+            class="primary"
+            link
+            :to="{ name: 'book-editbook', params: { id: detail.isbn } }"
+            >แก้ไข</v-btn
+          >
         </div>
       </div>
     </v-card>

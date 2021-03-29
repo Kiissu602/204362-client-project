@@ -174,7 +174,6 @@ export default {
     },
     member: {},
     change: false,
-    image: null,
     imgShow: null,
     facid: [],
     faculties: [],
@@ -207,13 +206,13 @@ export default {
         }))
       })
     },
-    image(e) {
+    'field.image'(e) {
       if (e) {
         const reader = new FileReader()
         reader.onload = (re) => {
           this.imgShow = re.target.result
         }
-        this.image = e
+        this.field.image = e
         reader.readAsDataURL(e)
       } else {
         this.imgShow = null
@@ -248,16 +247,14 @@ export default {
         reader.onload = (re) => {
           this.imgShow = re.target.result
         }
-        this.image = e.target.files[0]
+        this.field.image = e.target.files[0]
         reader.readAsDataURL(e.target.files[0])
         this.change = true
       } else {
         this.imgShow = null
       }
     },
-    save(bdate) {
-      this.$refs.menu.save(this.field.bdate)
-    },
+
     imgShoww(path) {
       return `${process.env.ENDPOINT}/uploads/${path}`
     },

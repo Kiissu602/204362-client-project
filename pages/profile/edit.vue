@@ -14,8 +14,9 @@ export default {
     save(field) {
       this.data = field
       const formData = new FormData()
+
       for (const key in this.data) {
-        if (key != null) {
+        if (this.data[key] != null) {
           formData.append(key, this.data[key])
         }
       }

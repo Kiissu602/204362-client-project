@@ -7,6 +7,13 @@ export function postBook(obj) {
     },
   })
 }
+export function putBook(id, obj) {
+  return axios.instance.put(`/api/books/${id}`, obj, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+}
 export function getCategory() {
   return axios.instance.get('/api/categories')
 }
