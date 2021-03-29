@@ -61,30 +61,32 @@
               ></v-img>
             </div>
             <v-col>
-              <div class="d-flex">
-                <p class="text-h6">ชื่อหนังสือ:</p>
-                <p class="text-h6">
-                  {{ item.title }}
-                </p>
-              </div>
-              <v-row>
-                <v-col class="col-auto text-subtitle-2"> ผู้แต่ง:</v-col>
-                <v-col class="text-subtitle-2">
-                  {{ item.writer }}
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col class="col-auto text-subtitle-2"> สำนักพิมพ์:</v-col>
-                <v-col class="text-subtitle-2">
-                  {{ item.publisherName }}
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col class="col-auto text-subtitle-2"> เรื่องย่อ:</v-col>
-                <v-col class="plot text-subtitle-2 text-truncate">
-                  {{ item.plot }}
-                </v-col>
-              </v-row>
+              <table>
+                <tr>
+                  <td class="text-h6">ชื่อหนังสือ:</td>
+                  <td class="text-h6">
+                    {{ item.title }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>ผู้แต่ง:</td>
+                  <td>
+                    {{ item.writer }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>สำนักพิมพ์:</td>
+                  <td>
+                    {{ item.publisherName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>เรื่องย่อ:</td>
+                  <td>
+                    {{ item.plot }}
+                  </td>
+                </tr>
+              </table>
             </v-col>
           </div>
         </v-card>
