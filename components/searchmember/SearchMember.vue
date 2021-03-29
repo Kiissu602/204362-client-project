@@ -108,7 +108,10 @@ export default {
   },
   mounted() {
     getFaculty().then((res) => {
-      this.faculties = res.data.map((f) => ({ text: f.fname, value: f.fnum }))
+      this.faculties = res.data.map((f) => ({
+        text: f.facultyName,
+        value: f.facultyID,
+      }))
       this.facid = res.data
     })
   },
