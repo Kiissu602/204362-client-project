@@ -63,26 +63,26 @@
             <v-col>
               <table>
                 <tr>
-                  <td class="text-h6">ชื่อหนังสือ:</td>
+                  <td class="px-4 text-h6 text-right">ชื่อหนังสือ:</td>
                   <td class="text-h6">
                     {{ item.title }}
                   </td>
                 </tr>
                 <tr>
-                  <td>ผู้แต่ง:</td>
+                  <td class="px-4 text-right">ผู้แต่ง:</td>
                   <td>
                     {{ item.writer }}
                   </td>
                 </tr>
                 <tr>
-                  <td>สำนักพิมพ์:</td>
+                  <td class="px-4 text-right">สำนักพิมพ์:</td>
                   <td>
                     {{ item.publisherName }}
                   </td>
                 </tr>
                 <tr>
-                  <td>เรื่องย่อ:</td>
-                  <td>
+                  <td class="px-4 text-right">เรื่องย่อ:</td>
+                  <td class="plot text-truncate">
                     {{ item.plot }}
                   </td>
                 </tr>
@@ -112,7 +112,7 @@
 
 <script>
 import { KinesisContainer, KinesisElement } from 'vue-kinesis'
-import { getBookByID } from '@/api/book'
+import { getBookByID, getBookByData } from '@/api/book'
 export default {
   filters: {
     img(path) {
@@ -128,21 +128,33 @@ export default {
   },
   data: () => ({
     detail: {
-      isbn: '',
-      title: '',
-      writer: '',
-      publisher: '',
+      isbn: null,
+      title: null,
+      writer: null,
+      publisher: null,
     },
     books: [],
   }),
 
   methods: {
     search() {
-      if (this.detail.isbn.length === 13) {
+      if (
+        this.detail.isbn?.length === 13 &&
+        this.detail.publisher === null &&
+        this.detail.title === null &&
+        this.detail.writer === null
+      ) {
         this.books = []
         getBookByID(this.detail.isbn).then((res) => {
           res.data.writer = res.data.writer.join(', ')
           this.books.push(res.data)
+        })
+      } else {
+        getBookByData(this.detail).then((res) => {
+          this.books = res.data.map((v) => ({
+            ...v,
+            writer: v.writer?.join(', '),
+          }))
         })
       }
     },

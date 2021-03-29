@@ -21,7 +21,9 @@ export function getCategory() {
 export function getBookByID(id) {
   return axios.instance.get(`/api/books/${id}`)
 }
-
+export function getBookByData(obj) {
+  return axios.instance.get(`api/books/bydata/`, { params: obj })
+}
 export function getBookToUpDate(id) {
   return axios.instance.get(`/api/books/up/${id}`)
 }
