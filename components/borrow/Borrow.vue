@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-form>
+    <v-form lazy-validation ref="form">
     <div class="brw d-flex justify-center align-center pa-20">
       <div class="box">
         <v-row>
@@ -12,6 +12,7 @@
               :counter="9"
               outlined
               dense
+              :rules="rules.memberIDRule"
           /></v-col>
         </v-row>
         <v-row>
@@ -23,6 +24,7 @@
               dense
               maxlength="13"
               :counter="13"
+              :rules="rules.ISBNRule"
           /></v-col>
         </v-row>
         <div class="bt d-flex justify-end align-end ml-12">
@@ -90,6 +92,7 @@
           </v-snackbar>
         </div>
       </div>
+    </div>
     </v-form>
   </v-container>
 </template>
@@ -99,8 +102,13 @@ import { getMemberRuleBorrow } from '@/api/member'
 import { postBorrow } from '@/api/borrow'
 import { getBookByID } from '@/api/book'
 import dayjs from 'dayjs'
+import * as rules from '@/api/validateRules'
+
 export default {
   data: () => ({
+    rules: {
+      ...rules,
+    },
     snackbar: false,
     detail: {
       memberID: '',
