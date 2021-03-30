@@ -52,19 +52,19 @@
           </v-col>
           <v-col class="d-flex justify-space-around mt-n4">
             <v-checkbox
-              v-model="detail.a"
+              v-model="detail.sex"
               class="ml-2"
               label="ชาย"
               value="ชาย"
             ></v-checkbox>
             <v-checkbox
-              v-model="detail.b"
+              v-model="detail.sex"
               class="ml-2"
               label="หญิง"
               value="หญิง"
             ></v-checkbox>
             <v-checkbox
-              v-model="detail.c"
+              v-model="detail.sex"
               class="ml-2"
               label="ไม่ระบุ"
               value="ไม่ระบุ"
@@ -126,9 +126,6 @@ export default {
     facid: [],
     faculties: [],
     department: [],
-    sexm: '',
-    sexfm: '',
-    sexunknow: '',
     head: ['รหัส', 'ชื่อ-นามกสุล', 'สังกัด', 'สาขา'],
     members: [],
   }),
@@ -153,6 +150,7 @@ export default {
   },
   methods: {
     search() {
+      console.log(this.detail)
       getMemberByLibrarian(this.detail).then((res) => {
         this.members = res.data.map((v) => ({
           ...v,

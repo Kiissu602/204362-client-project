@@ -45,53 +45,58 @@
         </div>
       </div>
     </v-card>
-    <v-row v-for="item in books" :key="item" class="pa-12">
-      <v-col class="d-flex justify-center" width="700">
+    <v-container class="contain d-flex justifycenter">
+      <v-container>
         <v-card
+          v-for="item in books"
+          :key="item"
+          class="mt-8"
           ripple
           hover
           link
           :to="{ name: 'book', params: { id: item.isbn } }"
-          ><div class="d-flex align-center">
-            <div>
-              <v-img
-                :src="item.image | img"
-                width="200"
-                :aspect-ratio="1"
-              ></v-img>
-            </div>
-            <v-col>
-              <table>
+        >
+          <table class="tab">
+            <tr>
+              <td class="pic">
+                <v-img
+                  class="mr-8"
+                  :src="item.image | img"
+                  width="150"
+                  :aspect-ratio="1"
+                ></v-img>
+              </td>
+              <td>
                 <tr>
-                  <td class="px-4 text-h6 text-right">ชื่อหนังสือ:</td>
-                  <td class="text-h6">
+                  <td class="title text-right text-h6">ชื่อหนังสือ:</td>
+                  <td class="pl-4 text-h6">
                     {{ item.title }}
                   </td>
                 </tr>
                 <tr>
-                  <td class="px-4 text-right">ผู้แต่ง:</td>
-                  <td>
+                  <td class="title text-right text-subtitle-1">ผู้แต่ง:</td>
+                  <td class="pl-4 text-subtitle-1">
                     {{ item.writer }}
                   </td>
                 </tr>
                 <tr>
-                  <td class="px-4 text-right">สำนักพิมพ์:</td>
-                  <td>
+                  <td class="title text-right text-subtitle-1">สำนักพิมพ์:</td>
+                  <td class="pl-4 text-subtitle-1">
                     {{ item.publisherName }}
                   </td>
                 </tr>
                 <tr>
-                  <td class="px-4 text-right">เรื่องย่อ:</td>
-                  <td class="plot text-truncate">
+                  <td class="title text-right text-subtitle-1">เรื่องย่อ:</td>
+                  <td class="plot text-truncate pl-4 text-subtitle-1">
                     {{ item.plot }}
                   </td>
                 </tr>
-              </table>
-            </v-col>
-          </div>
+              </td>
+            </tr>
+          </table>
         </v-card>
-      </v-col>
-    </v-row>
+      </v-container>
+    </v-container>
 
     <kinesis-container v-if="!books.length" class="parent">
       <kinesis-element class="b book1" type="depth" :strength="10" />
@@ -165,11 +170,23 @@ export default {
 <style lang="scss" scoped>
 .plot {
   flex: 1;
-  max-width: 500px;
+  max-width: 300px;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.contain {
+  max-width: 80%;
+}
+.tab {
+  width: 100%;
+}
+.pic {
+  width: 15%;
+}
+.title {
+  width: 15%;
 }
 .idx {
   height: 100vh;
@@ -183,6 +200,7 @@ export default {
 .detail {
   max-height: 100%;
 }
+
 .b {
   width: 100%;
   max-width: 500px;
@@ -194,6 +212,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .book1 {
   background-image: url('~assets/kinesis/1.png');
 }
