@@ -21,3 +21,7 @@ export function getMemberByID(id) {
 export function getMemberByLibrarian(obj) {
   return axios.instance.get(`/api/members/librarian`, { params: obj })
 }
+
+export function getMemberRuleBorrow(id) {
+  return axios.instance.get(`/api/members/rule/${id}`)
+}
