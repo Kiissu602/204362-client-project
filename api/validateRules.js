@@ -22,6 +22,7 @@ export const ISBNRule = [
 ]
 
 export const nameRule = [
+    v => !!v || 'กรุณากรอกด้วยจ๊ะ',
     v => /^[a-zA-Z\u0E00-\u0E7F0-9 ]*$/.test(v) ||'รูปแบบบ่ถูกเด้อจ้า'
 ]
 export const NameMemberRule = [
@@ -33,6 +34,18 @@ export const memberIDRule = [
     v => !!v || 'กรุณากรอกด้วยจ๊ะ',
     v => /^[0-9]{9}$/.test(v)
 ]
+export const publisherRule = [
+    v => !!v || 'กรุณากรอกด้วยจ๊ะ',
+    v => /^[0-9]{4}$/.test(v)
+]
+export const pageAndPriceBookRule = [
+    v => !!v || 'กรุณากรอกด้วยจ๊ะ',
+    v => /^[0-9]{10}$/.test(v)
+]
+
+
+
+
 
 
 

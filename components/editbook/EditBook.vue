@@ -117,8 +117,11 @@
 
 <script>
 import { getBookToUpDate, getCategory } from '@/api/book'
+import * as rules from '@/api/validateRules'
+
 export default {
   data: () => ({
+     rules: {...rules,},
     book: {
       image: null,
       isbn: '',

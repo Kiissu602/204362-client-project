@@ -1,49 +1,61 @@
 <template>
   <v-container>
-    <div class="brw d-flex justify-center align-center pa-20">
-      <div class="box">
-        <v-row>
-          <v-col><v-text-field label="รหัสสมาชิก" outlined dense /></v-col>
-        </v-row>
-        <v-row>
-          <v-col><v-text-field label="รหัสหนังสือ" outlined dense /></v-col>
-        </v-row>
-        <div class="bt d-flex justify-end align-end ml-12">
-          <v-btn color="primary"><v-icon>mdi-plus</v-icon>เพิ่ม</v-btn>
-        </div>
-        <div>
-          <p class="text-center text-subtitle-1">รหัส: {{ PID }}</p>
-          <p class="text-center text-subtitle-1">
-            ชื่อ: {{ fname }} {{ lname }}
-          </p>
-        </div>
-        <div>
-          <table class="br mt-12">
-            <thead>
-              <tr>
-                <th v-for="item in head" :key="item" class="text-subtitle-1">
-                  {{ item }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in rules" :key="item.type">
-                <td class="text-center">{{ item.type }}</td>
-                <td class="text-center">{{ item.num }}</td>
-                <td class="text-center">{{ item.day }}</td>
-                <td class="text-center">{{ item.booking }}</td>
-              </tr>
-            </tbody>
-          </table>
+    <v-form lazy-validation ref="form">
+      <div class="brw d-flex justify-center align-center pa-20">
+        <div class="box">
+          <v-row>
+            <v-col><v-text-field label="รหัสสมาชิก"
+             :rules="rules.memberIDRule"
+            outlined
+            
+            dense /></v-col>
+          </v-row>
+          <v-row>
+            <v-col><v-text-field label="รหัสหนังสือ" 
+            :rules="rules.ISBNRule"
+            outlined dense /></v-col>
+          </v-row>
+          <div class="bt d-flex justify-end align-end ml-12">
+            <v-btn color="primary"><v-icon>mdi-plus</v-icon>เพิ่ม</v-btn>
+          </div>
+          <div>
+            <p class="text-center text-subtitle-1">รหัส: {{ PID }}</p>
+            <p class="text-center text-subtitle-1">
+              ชื่อ: {{ fname }} {{ lname }}
+            </p>
+          </div>
+          <div>
+            <table class="br mt-12">
+              <thead>
+                <tr>
+                  <th v-for="item in head" :key="item" class="text-subtitle-1">
+                    {{ item }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in rules" :key="item.type">
+                  <td class="text-center">{{ item.type }}</td>
+                  <td class="text-center">{{ item.num }}</td>
+                  <td class="text-center">{{ item.day }}</td>
+                  <td class="text-center">{{ item.booking }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </v-form>
   </v-container>
 </template>
 
 <script>
+import * as rules from '@/api/validateRules'
 export default {
   data: () => ({
+    rules: {
+      ...rules,
+    },
     PID: '610510697',
     fname: 'พรนะวัด',
     lname: 'โบราณ',

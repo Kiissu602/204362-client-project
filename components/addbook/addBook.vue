@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-form class="addb pa-8">
+    <v-form class="addb pa-8" lazy-validation ref="form">
       <div class="d-flex align-center justify-center">
         <label>
           <v-card ripple height="150">
@@ -30,6 +30,7 @@
               label="รหัส ISBN"
               maxlength="13"
               counter="13"
+              :rules="rules.ISBNRule"
             />
             <v-row class="py-4 pl-8">
               <v-col
@@ -38,6 +39,8 @@
                   outlined
                   dense
                   label="ชื่อหนังสือ"
+                  :rules="rules.nameRule"
+
                 />
               </v-col>
             </v-row>
@@ -52,19 +55,23 @@
             label="ประเภทหนังสือ"
             outlined
             dense
+            :rules="rules.dropDownRule"
           ></v-select
         ></v-col>
         <v-col
           ><v-text-field
             v-model="book.writerName"
             outlined
+            :rules="rules.nameRule"
             dense
-            label="ชื่อผู้แต่ง/นามปากกา" /></v-col
+            label="ชื่อผู้แต่ง/นามปากกา"
+            /></v-col
         ><v-col
           ><v-text-field
             v-model="book.publisherName"
             outlined
             dense
+            :rules="rules.nameRule"
             label="สำนักพิมพ์" /></v-col
       ></v-row>
       <v-row
@@ -86,6 +93,8 @@
                 label="ฉบับที่พิมพ์"
                 outlined
                 dense
+                :rules="rules.publisherRule"
+               
               ></v-text-field></v-col
             ><v-col
               ><v-text-field
@@ -93,6 +102,7 @@
                 label="จำนวนหน้า"
                 outlined
                 dense
+                :rules="rules.pageAndPriceBookRule"
               ></v-text-field></v-col></v-row></v-col
         ><v-col
           ><v-text-field
@@ -101,6 +111,7 @@
             suffix="บาท"
             outlined
             dense
+            :rules="rules.pageAndPriceBookRule"
           ></v-text-field></v-col
       ></v-row>
 
@@ -123,8 +134,10 @@
 
 <script>
 import { getCategory } from '@/api/book'
+import * as rules from '@/api/validateRules'
 export default {
   data: () => ({
+    rules: {...rules,},
     book: {
       image: null,
       ISBN: null,
