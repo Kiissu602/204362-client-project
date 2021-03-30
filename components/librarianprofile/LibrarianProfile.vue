@@ -1,6 +1,6 @@
 <template>
-  <v-card lass="ca d-flex align-center justify-center" min-width="300">
-    <div class="profile d-flex align-center justify-center ma-6">
+  <v-card lass="ca d-flex justify-center" min-width="300">
+    <div class="profile d-flex justify-center align-center ma-6">
       <v-card class="ml-4" max-height="150"
         ><v-img
           :src="detail.image | img"
@@ -47,16 +47,11 @@
         </table>
       </v-container>
     </div>
-    <div class="d-flex justify-end ma-4">
-      <ProfileEditButton />
-    </div>
   </v-card>
 </template>
-
 <script>
-import dayjs from 'dayjs'
-import { mapState } from 'vuex'
 import { getMemberByID } from '@/api/member'
+import dayjs from 'dayjs'
 export default {
   filters: {
     img(path) {
@@ -67,17 +62,13 @@ export default {
     detail: {},
   }),
   computed: {
-    ...mapState({
-      login: (state) => state.login,
-
-      text() {
-        return `${this.detail.firstName} ${this.detail.lastName}`
-      },
-    }),
+    text() {
+      return `${this.detail.firstName} ${this.detail.lastName}`
+    },
   },
 
   mounted() {
-    getMemberByID(this.login.memberID).then((res) => {
+    getMemberByID(this.$route.params.id).then((res) => {
       this.detail = res.data
     })
   },

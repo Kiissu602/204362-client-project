@@ -6,7 +6,7 @@
         <v-row align="center" justify="center">
           <v-col
             ><v-text-field
-              v-model="MemID"
+              v-model="detail.id"
               dense
               label="รหัส"
               outlined
@@ -16,7 +16,7 @@
           ></v-col>
           <v-col
             ><v-text-field
-              v-model="firstName"
+              v-model="detail.firstname"
               outlined
               dense
               label="ชื่อ"
@@ -24,7 +24,7 @@
           ></v-col>
           <v-col
             ><v-text-field
-              v-model="lastName"
+              v-model="detail.lastName"
               dense
               outlined
               label="นามสกุล"
@@ -34,7 +34,7 @@
         <v-row
           ><v-col>
             <v-autocomplete
-              v-model="fac"
+              v-model="detail.faculty"
               label="สังกัด"
               :items="faculties"
               outlined
@@ -43,7 +43,7 @@
           </v-col>
           <v-col>
             <v-autocomplete
-              v-model="dep"
+              v-model="detail.department"
               label="สาขา"
               :items="department"
               outlined
@@ -51,31 +51,58 @@
             ></v-autocomplete>
           </v-col>
           <v-col class="d-flex justify-space-around mt-n4">
-            <v-checkbox v-model="sexm" class="ml-2" label="ชาย"></v-checkbox>
-            <v-checkbox v-model="sexfm" class="ml-2" label="หญิง"></v-checkbox>
+            <v-checkbox
+              v-model="detail.a"
+              class="ml-2"
+              label="ชาย"
+              value="ชาย"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="detail.b"
+              class="ml-2"
+              label="หญิง"
+              value="หญิง"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="detail.c"
+              class="ml-2"
+              label="ไม่ระบุ"
+              value="ไม่ระบุ"
+            ></v-checkbox>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="d-flex justify-end"
-            ><v-btn color="primary">ค้นหา</v-btn></v-col
+            ><v-btn color="primary" @click="search">ค้นหา</v-btn></v-col
           >
         </v-row>
-        <table class="list mt-12">
+        <v-simple-table fixed-header class="list mt-12">
           <thead>
             <tr>
-              <th v-for="item in head" :key="item" class="head text-subtitle-1">
+              <th
+                v-for="item in head"
+                :key="item"
+                class="head text-center text-subtitle-1"
+              >
                 {{ item }}
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in items" :key="item.type">
-              <td class="text-center">{{ item.id }}</td>
+            <tr
+              v-for="item in members"
+              :key="item.type"
+              @click="go(item.memberID)"
+            >
+              <td class="text-center">{{ item.memberID }}</td>
               <td class="text-center">{{ item.name }}</td>
-              <td class="text-center">{{ item.lastname }}</td>
+              <td class="text-center">{{ item.facultyName }}</td>
+              <td class="text-center">
+                {{ item.departmentName }}
+              </td>
             </tr>
           </tbody>
-        </table>
+        </v-simple-table>
       </div>
     </v-card>
   </v-container>
@@ -83,25 +110,34 @@
 
 <script>
 import { getFaculty, getDepart } from '@/api/faculties'
+import { getMemberByLibrarian } from '@/api/member'
 export default {
   data: () => ({
-    fac: '',
-    dep: '',
+    detail: {
+      id: '',
+      name: '',
+      firstName: '',
+      lastName: '',
+      faculty: '',
+      department: '',
+      sex: [],
+    },
+
     facid: [],
     faculties: [],
     department: [],
     sexm: '',
     sexfm: '',
     sexunknow: '',
-    head: ['รหัส', 'ชื่อ', 'นามสกุล'],
-    items: [{ id: '610510808', name: 'พิชัย', lastname: 'นามวรรณ์' }],
+    head: ['รหัส', 'ชื่อ-นามกสุล', 'สังกัด', 'สาขา'],
+    members: [],
   }),
   watch: {
-    fac(next) {
+    'detail.faculty'(next) {
       getDepart(next).then((res) => {
         this.department = res.data.departmentlist.map((d) => ({
-          text: d.dname,
-          value: d.dnum,
+          text: d.departmentName,
+          value: d.departMentNum,
         }))
       })
     },
@@ -114,6 +150,22 @@ export default {
       }))
       this.facid = res.data
     })
+  },
+  methods: {
+    search() {
+      getMemberByLibrarian(this.detail).then((res) => {
+        this.members = res.data.map((v) => ({
+          ...v,
+          name: v.firstName + ' ' + v.lastName,
+        }))
+      })
+    },
+    go(next) {
+      this.$router.push({
+        name: 'searchmember-profiledata',
+        params: { id: next },
+      })
+    },
   },
 }
 </script>
@@ -130,7 +182,7 @@ export default {
   width: 100%;
 }
 .head {
-  width: 33%;
+  width: 25%;
   border-bottom: 1px solid black;
 }
 </style>

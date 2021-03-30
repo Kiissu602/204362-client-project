@@ -64,13 +64,7 @@
       <template #append>
         <v-list nav>
           <div v-if="login.loggedIn !== true">
-            <v-list-item
-              to="/signin"
-              link
-              exact
-              color="primary"
-              @click="Signin"
-            >
+            <v-list-item to="/signin" link exact color="primary">
               <v-list-item-action>
                 <v-icon>mdi-login-variant</v-icon>
               </v-list-item-action>
