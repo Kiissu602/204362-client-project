@@ -1,6 +1,6 @@
 <template>
-  <v-form
-    ><div class="mt-16">
+  <v-form lazy-validation ref="form">
+    <div class="mt-16">
       <div class="d-flex align-center justify-space-around">
         <div>
           <label>
@@ -22,6 +22,7 @@
             dense
             outlined
             label="ISBN"
+            :rules="rules.ISBNRule"
           />
           <v-select
             v-model="book.category"
@@ -29,12 +30,14 @@
             dense
             outlined
             label="หมวดหมู่"
+            :rules="rules.dropDownRule"
           />
           <v-text-field
             v-model="book.title"
             dense
             outlined
             label="ชื่อหนังสือ"
+            :rules="rules.nameRule"
           />
         </div>
       </div>
@@ -46,6 +49,7 @@
             dense
             outlined
             label="ผู้แต่ง"
+            :rules="rules.nameRule"
           />
         </v-col>
         <v-col>
@@ -55,6 +59,7 @@
             dense
             outlined
             label="สำนักพิมพ์"
+            :rules="rules.nameRule"
           />
         </v-col>
         <v-col>
@@ -76,6 +81,7 @@
             dense
             outlined
             label="ฉบับที่พิมพ์"
+            :rules="rules.publisherRule"
           />
         </v-col>
         <v-col>
@@ -85,6 +91,7 @@
             dense
             outlined
             label="จำนวนหน้า"
+            :rules="rules.pageAndPriceBookRule"
         /></v-col>
         <v-col>
           <v-text-field
@@ -93,6 +100,7 @@
             dense
             outlined
             label="ราคา"
+            :rules="rules.pageAndPriceBookRule"
           />
         </v-col>
       </v-row>
