@@ -74,7 +74,12 @@
       <v-row>
         <v-col cols="2" class="text-right"> ที่อยู่การจัดส่ง </v-col>
         <v-col cols="4" lg="2">
-          <v-select :items="place" label="สถานที่" outlined :rules="placeRule"></v-select>
+          <v-select
+            :items="place"
+            label="สถานที่"
+            outlined
+            :rules="placeRule"
+          ></v-select>
         </v-col>
       </v-row>
       <v-row>
@@ -109,7 +114,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   data: () => ({
@@ -120,26 +124,22 @@ export default {
       (v) => (v && v.length === 10) || 'เบอร์โทร 10 ตัวจ๊ะ',
       (v) => /^0([0-9]){9}$/.test(v) || 'รูปแบบเบอร์ผิดนะจ๊ะ 0XXXXXXXXX',
     ],
-    placeRule:[
-      (v) => !!v || 'เลือกสถานที่ด้วยจ๊ะ',
-    ],
+    placeRule: [(v) => !!v || 'เลือกสถานที่ด้วยจ๊ะ'],
     form: {
-      phone: "0874985158"
-    }
-
+      phone: '0874985158',
+    },
   }),
 
-   methods: {
-      validate () {
-        this.valid = this.$refs.form.validate()
-        if(this.valid){
-          // ส่งข้อมูลตรงนี้
-          this.$router.push({path:"/reserve/member/Status"})
-        }
-      },
-   }
+  methods: {
+    validate() {
+      this.valid = this.$refs.form.validate()
+      if (this.valid) {
+        // ส่งข้อมูลตรงนี้
+        this.$router.push({ path: '/reserve/member/Status' })
+      }
+    },
+  },
 }
 </script>
 
-<style>
-</style>
+<style></style>

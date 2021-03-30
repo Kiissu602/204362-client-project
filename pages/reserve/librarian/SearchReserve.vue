@@ -10,24 +10,13 @@
       </v-col>
     </v-row>
     <v-row>
-            <v-col offset="2" align="left">
-                <v-btn
-                depressed
-                color="black"
-                dark
-                class="mr-5"
-                >
-                รอบที่ 1: 12.30
-                </v-btn>
-                <v-btn
-                depressed
-                color="black"
-                dark
-                >
-                รอบที่ 2: 16.30
-                </v-btn>
-            </v-col>
-        </v-row>
+      <v-col offset="2" align="left">
+        <v-btn depressed color="black" dark class="mr-5">
+          รอบที่ 1: 12.30
+        </v-btn>
+        <v-btn depressed color="black" dark> รอบที่ 2: 16.30 </v-btn>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <v-simple-table>

@@ -40,7 +40,6 @@
                   dense
                   label="ชื่อหนังสือ"
                   :rules="rules.nameRule"
-
                 />
               </v-col>
             </v-row>
@@ -64,8 +63,7 @@
             outlined
             :rules="rules.nameRule"
             dense
-            label="ชื่อผู้แต่ง/นามปากกา"
-            /></v-col
+            label="ชื่อผู้แต่ง/นามปากกา" /></v-col
         ><v-col
           ><v-text-field
             v-model="book.publisherName"
@@ -94,7 +92,6 @@
                 outlined
                 dense
                 :rules="rules.publisherRule"
-               
               ></v-text-field></v-col
             ><v-col
               ><v-text-field
@@ -137,7 +134,7 @@ import { getCategory } from '@/api/book'
 import * as rules from '@/api/validateRules'
 export default {
   data: () => ({
-    rules: {...rules,},
+    rules: { ...rules },
     book: {
       image: null,
       ISBN: null,

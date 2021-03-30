@@ -78,7 +78,6 @@
                 readonly
                 v-bind="attrs"
                 v-on="on"
-                
               ></v-text-field>
             </template>
             <v-date-picker
@@ -102,9 +101,12 @@
           </v-select
         ></v-col>
         <v-col
-          ><v-text-field v-model="detail.phone" 
-          outlined dense label="โทรศัพท์"
-          :rules="rules.telPhoneRule"
+          ><v-text-field
+            v-model="detail.phone"
+            outlined
+            dense
+            label="โทรศัพท์"
+            :rules="rules.telPhoneRule"
         /></v-col>
       </v-row>
       <v-row

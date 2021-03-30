@@ -129,7 +129,7 @@ import * as rules from '@/api/validateRules'
 
 export default {
   data: () => ({
-     rules: {...rules,},
+    rules: { ...rules },
     book: {
       image: null,
       isbn: '',

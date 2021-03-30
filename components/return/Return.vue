@@ -3,20 +3,30 @@
     <div class="rt d-flex justify-center align-center pa-20">
       <div class="box">
         <v-row>
-          <v-col><v-text-field label="รหัสสมาชิก" outlined dense /></v-col>
+          <v-col
+            ><v-text-field
+              v-model="detail.memberID"
+              label="รหัสสมาชิก"
+              maxlength="9"
+              :counter="9"
+              outlined
+              dense
+          /></v-col>
         </v-row>
 
         <div class="bt d-flex justify-center align-end">
-          <v-btn color="primary"><v-icon>mdi-magnify</v-icon>ค้นหา</v-btn>
+          <v-btn color="primary" @click="getmem"
+            ><v-icon>mdi-magnify</v-icon>ค้นหา</v-btn
+          >
         </div>
         <div class="pt-10">
-          <p class="text-center text-subtitle-1">รหัส: {{ pid }}</p>
+          <p class="text-center text-subtitle-1">รหัส: {{ list.memberID }}</p>
           <p class="text-center text-subtitle-1">
-            ชื่อ: {{ fname }} {{ lname }}
+            ชื่อ: {{ list.firstName }} {{ list.lastNAme }}
           </p>
         </div>
         <div>
-          <table class="rtl mt-12">
+          <v-simple-table class="rtl mt-12">
             <thead>
               <tr>
                 <th v-for="item in head" :key="item" class="text-subtitle-1">
@@ -25,14 +35,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in rules" :key="item.type">
-                <td class="text-center">{{ item.type }}</td>
-                <td class="text-center">{{ item.num }}</td>
-                <td class="text-center">{{ item.day }}</td>
-                <td class="text-center">{{ item.booking }}</td>
+              <tr v-for="item in list" :key="item.isbn">
+                <td class="text-center">{{ item.borrowDate }}</td>
+                <td class="text-center">{{ item.dueDate }}</td>
+                <td class="text-center">{{ item.title }}</td>
               </tr>
             </tbody>
-          </table>
+          </v-simple-table>
         </div>
       </div>
     </div>
@@ -40,13 +49,23 @@
 </template>
 
 <script>
+import { getBorrowByMember } from '@/api/borrow'
 export default {
   data: () => ({
-    pid: '610510692',
-    fname: 'พรนะวัด',
-    lname: 'โบราณ',
+    detail: {
+      memberID: null,
+    },
+
     head: ['วันที่ยืม', 'กำหนดคืน', 'ชื่อหนังสือ', 'ดำเนินการ'],
+    list: [],
   }),
+  methods: {
+    getmem() {
+      getBorrowByMember(this.detail.memberID).then((res) =>
+        console.log(res.data)
+      )
+    },
+  },
 }
 </script>
 
@@ -56,7 +75,6 @@ export default {
 }
 .rtl {
   width: 100%;
-  border-bottom: 1px solid;
 }
 .box {
   width: 70%;
