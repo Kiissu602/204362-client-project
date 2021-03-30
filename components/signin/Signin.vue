@@ -1,5 +1,5 @@
 <template>
-  <v-form class="lgn" @submit.prevent="submit">
+  <v-form class="lgn" @submit.prevent="validate" lazy-validation ref="form">
     <v-card class="pa-4">
       <p class="title font-weight-bold">ลงชื่อเข้าใช้.</p>
       <v-text-field
@@ -10,12 +10,14 @@
         type="text"
         suffix="@gmail.com"
         dense
+        :rules="emailRules"
       ></v-text-field>
       <v-text-field
         v-model="pwd"
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show ? 'text' : 'password'"
         label="รหัสผ่าน"
+        :rules="[v => !!v||'รหัสผ่านห้ามว่าง']"
         outlined
         required
         dense
@@ -54,6 +56,12 @@ export default {
     email: '',
     pwd: '',
     show: false,
+
+    emailRules: [
+        v => !!v || 'E-mail ห้ามว่าง',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+    
   }),
   mounted() {
     const storage = localStorage.getItem('mm-login')
@@ -87,6 +95,13 @@ export default {
             this.err = true
           }
         })
+    },
+    validate(){
+      const valid = this.$refs.form.validate()
+      if(valid){
+        this.submit()
+      }
+
     },
   },
 }
