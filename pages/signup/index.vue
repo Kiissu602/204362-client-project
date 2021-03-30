@@ -10,6 +10,7 @@ export default {
   data: () => ({
     data: {},
     field: {},
+
   }),
   methods: {
     submit(regist) {
@@ -30,3 +31,5 @@ export default {
   width: 100%;
 }
 </style>
+
+

@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-form class="data pa-12">
+    <v-form class="data pa-12" lazy-validation ref="form">
       <div class="d-flex align-center justify-center">
         <label>
           <v-card ripple height="150">
@@ -31,6 +31,7 @@
               label="รหัส"
               maxlength="9"
               counter="9"
+              :rules="rules.memberIDRule"
             />
             <v-row class="py-4 pl-8">
               <v-col
@@ -40,6 +41,7 @@
                   dense
                   label="ชื่อ"
                   required
+                  :rules="rules.NameMemberRule"
                 />
               </v-col>
               <v-col
@@ -48,6 +50,7 @@
                   outlined
                   dense
                   label="นามสกุล"
+                  :rules="rules.NameMemberRule"
                 />
               </v-col>
             </v-row>
@@ -75,6 +78,7 @@
                 readonly
                 v-bind="attrs"
                 v-on="on"
+                
               ></v-text-field>
             </template>
             <v-date-picker
@@ -93,11 +97,14 @@
             label="เพศ"
             dense
             outlined
+            :rules="rules.dropDownRule"
           >
           </v-select
         ></v-col>
         <v-col
-          ><v-text-field v-model="detail.phone" outlined dense label="โทรศัพท์"
+          ><v-text-field v-model="detail.phone" 
+          outlined dense label="โทรศัพท์"
+          :rules="rules.telPhoneRule"
         /></v-col>
       </v-row>
       <v-row
@@ -108,6 +115,7 @@
             :items="faculties"
             outlined
             dense
+            :rules="rules.dropDownRule"
           ></v-autocomplete>
         </v-col>
         <v-col>
@@ -117,6 +125,7 @@
             disabled
             outlined
             dense
+            :rules="rules.dropDownRule"
           ></v-autocomplete>
           <v-autocomplete
             v-else
@@ -125,6 +134,7 @@
             :items="departments"
             outlined
             dense
+            :rules="rules.dropDownRule"
           ></v-autocomplete>
         </v-col>
         <v-col>
@@ -134,6 +144,7 @@
             label="อาชีพ"
             outlined
             dense
+            :rules="rules.dropDownRule"
           ></v-select> </v-col
       ></v-row>
       <v-row>
@@ -144,6 +155,7 @@
             outlined
             :suffix="suff"
             dense
+            :rules="rules.emailRule"
           ></v-text-field
         ></v-col>
         <v-col
@@ -155,6 +167,7 @@
             outlined
             dense
             @click:append="show1 = !show1"
+            :rules="rules.passwordRule"
           ></v-text-field
         ></v-col>
         <v-col
@@ -180,9 +193,13 @@
 
 <script>
 import { getFaculty, getDepart } from '@/api/faculties'
+import * as rules from '@/api/validateRules'
 import dayjs from 'dayjs'
 export default {
   data: () => ({
+    rules: {
+      ...rules,
+    },
     detail: {
       image: null,
       memberID: '',
