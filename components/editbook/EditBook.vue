@@ -81,7 +81,6 @@
             dense
             outlined
             label="ฉบับที่พิมพ์"
-            :rules="rules.publisherRule"
           />
         </v-col>
         <v-col>
@@ -91,7 +90,6 @@
             dense
             outlined
             label="จำนวนหน้า"
-            :rules="rules.pageAndPriceBookRule"
         /></v-col>
         <v-col>
           <v-text-field
@@ -100,7 +98,6 @@
             dense
             outlined
             label="ราคา"
-            :rules="rules.pageAndPriceBookRule"
           />
         </v-col>
       </v-row>

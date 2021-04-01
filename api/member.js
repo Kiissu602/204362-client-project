@@ -23,9 +23,16 @@ export function getMemberByLibrarian(obj) {
 }
 
 export function getMemberRuleBorrow(id) {
-  return axios.instance.get(`/api/members/rule/`, { params: id })
+  return axios.instance.get(`/api/members/rule`, { params: id })
 }
 
 export function getMemberReturn(id) {
   return axios.instance.get(`/api/members/borrow`, { params: id })
+}
+export function getBorrowByMember(id) {
+  return axios.instance.get('/api/bbrs/member', { params: id })
+}
+
+export function getBorrowMemberBook(obj) {
+  return axios.instance.get('/api/bbrs/memberbook', { params: obj })
 }

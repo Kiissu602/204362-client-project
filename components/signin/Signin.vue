@@ -9,15 +9,15 @@
         required
         type="text"
         suffix="@gmail.com"
-        dense
         :rules="emailRules"
+        dense
       ></v-text-field>
       <v-text-field
         v-model="pwd"
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show ? 'text' : 'password'"
         label="รหัสผ่าน"
-        :rules="[v => !!v||'รหัสผ่านห้ามว่าง']"
+        :rules="[(v) => !!v || 'รหัสผ่านห้ามว่าง']"
         outlined
         required
         dense
@@ -57,11 +57,7 @@ export default {
     pwd: '',
     show: false,
 
-    emailRules: [
-        v => !!v || 'E-mail ห้ามว่าง',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-    
+    emailRules: [(v) => !!v || 'E-mail ห้ามว่าง'],
   }),
   mounted() {
     const storage = localStorage.getItem('mm-login')
@@ -96,12 +92,11 @@ export default {
           }
         })
     },
-    validate(){
+    validate() {
       const valid = this.$refs.form.validate()
-      if(valid){
+      if (valid) {
         this.submit()
       }
-
     },
   },
 }

@@ -6,9 +6,8 @@
       </v-row>
       <v-row>
         <v-col class="ml-15">
-          รหัส:610510714 <br />
-          ชื่อ: หฤทัย แสงยอด <br />
-          วันที่: 12/2/2564
+          รหัส: {{ login.memberID }} <br />
+          ชื่อ: {{ login.firstName }} {{ login.lastName }} <br />
         </v-col>
       </v-row>
       <v-row>
@@ -17,53 +16,33 @@
             <template v-slot:default>
               <thead>
                 <tr>
-                  <th class="text-left">ลำดับ</th>
-                  <th class="text-left">รูป</th>
-                  <th class="text-left">รายละเอียด</th>
-                  <th class="text-left">การกระทำ</th>
+                  <th class="text-center">รูป</th>
+                  <th class="text-center">รายละเอียด</th>
+                  <th class="text-center">ดำเนินการ</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
+                <tr v-for="item in booklist" :key="item.id">
                   <td>
-                    <v-img
-                      max-height="97"
-                      max-width="88"
-                      src="https://images-na.ssl-images-amazon.com/images/I/51ql73FZvwL._SY445_.jpg"
-                      alt=""
-                    ></v-img>
+                    <div class="d-flex justify-center">
+                      <v-img
+                        max-height="97"
+                        max-width="88"
+                        :src="item.img | img"
+                      ></v-img>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    ชื่อเรื่อง: {{ item.title }} <br />
+                    รหัสหนังสือ: {{ item.isbn }}<br />
+                    ผู้แต่ง: {{ item.writer }}
                   </td>
                   <td>
-                    ชื่อเรื่อง: A Little Princess <br />
-                    รหัสหนังสือ: 00111<br />
-                    ผู้แต่ง: Burnett, Frances Hodgson
-                  </td>
-                  <td>
-                    <v-btn elevation="0" icon
-                      ><v-icon>mdi-delete</v-icon></v-btn
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    <v-img
-                      max-height="97"
-                      max-width="88"
-                      src="https://upload.wikimedia.org/wikipedia/en/0/05/Littleprince.JPG"
-                      alt=""
-                    ></v-img>
-                  </td>
-                  <td>
-                    ชื่อเรื่อง: Little Prince <br />
-                    รหัสหนังสือ: 000112<br />
-                    ผู้แต่ง: Antoine de Saint-Exupery
-                  </td>
-                  <td>
-                    <v-btn elevation="0" icon
-                      ><v-icon>mdi-delete</v-icon></v-btn
-                    >
+                    <div class="d-flex justify-center">
+                      <v-btn elevation="0" icon @click="del(item.borrowID)"
+                        ><v-icon>mdi-delete</v-icon></v-btn
+                      >
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -75,7 +54,8 @@
         <v-col cols="2" class="text-right"> ที่อยู่การจัดส่ง </v-col>
         <v-col cols="4" lg="2">
           <v-select
-            :items="place"
+            v-model="place"
+            :items="places"
             label="สถานที่"
             outlined
             :rules="placeRule"
@@ -86,7 +66,7 @@
         <v-col cols="2" class="text-right"> เบอร์ติดต่อ </v-col>
         <v-col cols="4" lg="2">
           <v-text-field
-            v-model="form.phone"
+            v-model="phone"
             placeholder=""
             solo
             :error-messages="errors"
@@ -110,14 +90,32 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-snackbar v-model="snackbar" :timeout="timeout"
+        >เปลี่ยนแล้วจย้า<template #action="{ attrs }">
+          <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+            ปิด
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-form>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { getBooking, deleteBorrow, putPlaceBooking } from '@/api/borrow'
 export default {
+  filters: {
+    img(path) {
+      return `${process.env.ENDPOINT}/uploads/${path}`
+    },
+  },
   data: () => ({
-    place: [1, 2, 3, 4, 5, 6],
+    place: '',
+    timeout: 2000,
+    snackbar: false,
+    booklist: [],
+    places: ['หอหญิง 1', 'หอชาย 3', 'ภาควิชาวิทยาการคอมพิวเตอร์'],
     valid: true,
     telPhoneRule: [
       (v) => !!v || 'กรอกเบอร์โทรด้วยจ๊ะ',
@@ -125,21 +123,51 @@ export default {
       (v) => /^0([0-9]){9}$/.test(v) || 'รูปแบบเบอร์ผิดนะจ๊ะ 0XXXXXXXXX',
     ],
     placeRule: [(v) => !!v || 'เลือกสถานที่ด้วยจ๊ะ'],
-    form: {
-      phone: '0874985158',
-    },
+    phone: '',
   }),
-
+  computed: {
+    ...mapState({
+      login: (state) => state.login,
+    }),
+  },
+  mounted() {
+    this.phone = this.login.phone
+    const id = this.login.memberID
+    getBooking(id).then((res) => {
+      this.booklist = res.data.map((v) => ({
+        ...v,
+        writer: v.writer?.join(', '),
+      }))
+    })
+  },
   methods: {
     validate() {
       this.valid = this.$refs.form.validate()
       if (this.valid) {
-        // ส่งข้อมูลตรงนี้
-        this.$router.push({ path: '/reserve/member/Status' })
+        this.booklist.forEach((el) => {
+          const obj = {
+            borrowID: el.borrowID,
+            place: this.place,
+            phoneTemporary: this.phone,
+          }
+          putPlaceBooking(obj)
+        })
+        this.snackbar = true
       }
+    },
+    del(id) {
+      deleteBorrow(id)
+      this.booklist = this.booklist.filter(function (el) {
+        return el.borrowID !== id
+      })
     },
   },
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.page-enter {
+}
+.page-leave-to {
+}
+</style>

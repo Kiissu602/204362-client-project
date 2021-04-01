@@ -67,6 +67,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-enter,
+.page-leave-to,
 .adb {
   height: 100vh;
 }

@@ -51,7 +51,27 @@
             </v-list-item>
           </v-list-group>
         </div>
-        <v-list-item v-if="login.loggedIn" to="" router exact color="primary">
+        <v-list-item
+          v-if="login.loggedIn"
+          router
+          to="/reserve/member/Reserve"
+          link
+          color="primary"
+        >
+          <v-list-item-action>
+            <v-icon>mdi-book-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="'หนังสือที่จอง'" />
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          v-if="login.loggedIn"
+          to="/reserve/member/Status"
+          router
+          exact
+          color="primary"
+        >
           <v-list-item-action>
             <v-icon>mdi-truck-fast-outline</v-icon>
           </v-list-item-action>
@@ -118,6 +138,7 @@ export default {
         title: 'Library System',
         to: '/',
       },
+
       { icon: 'mdi-format-list-checkbox', title: 'กฎการยืม', to: '/ruler' },
     ],
     lgnd: [
@@ -134,10 +155,10 @@ export default {
         action: 'mdi-account-multiple-outline',
         items: [
           { title: 'ค้นหาสมาชิก', to: '/searchmember' },
-          { title: 'รายการจอง', to: '' },
+          { title: 'รายการจอง', to: '/reserve/librarian/SearchReserve' },
           { title: 'รายการยืม', to: '/borrowlist' },
           { title: 'ประวัติการยืม', to: '' },
-          { title: 'ตรวจสอบผู้ใช้', to: '' },
+          { title: 'ตรวจสอบผู้ใช้', to: '/validate' },
         ],
         title: 'จัดการสมาชิก',
       },

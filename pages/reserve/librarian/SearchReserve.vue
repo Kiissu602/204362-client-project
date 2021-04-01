@@ -1,25 +1,11 @@
 <template>
   <div>
     <v-row>
-      <v-col class="text-center"><h1>รายการจองหนังสือ</h1> </v-col>
-    </v-row>
-    <v-row>
-      <v-col class="ml-15">
-        วันที่: 12 เมษายน 2563<br />
-        เวลา: 12.30 น. <br />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col offset="2" align="left">
-        <v-btn depressed color="black" dark class="mr-5">
-          รอบที่ 1: 12.30
-        </v-btn>
-        <v-btn depressed color="black" dark> รอบที่ 2: 16.30 </v-btn>
-      </v-col>
+      <v-col class="text-center mt-12"><h1>รายการจองหนังสือ</h1> </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <v-simple-table>
+        <v-simple-table class="mt-12">
           <template v-slot:default>
             <thead>
               <tr>
@@ -33,47 +19,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>610510714</td>
-                <td>ป้ายภาควิชาคอมพิวเตอร์</td>
+              <tr v-for="item in list" :key="item.borrowID">
+                <td>{{ item.memberID }}</td>
+                <td>{{ item.reservePlace }}</td>
                 <td>
-                  012121<br />
-                  011121<br />
-                  124334<br />
-                  502444<br />
-                  555144
+                  {{ item.isbn }}
                 </td>
-                <td>021414545</td>
-                <td>รอดำเนินการ</td>
+                <td>{{ item.phoneTemp }}</td>
+                <td>{{ item.status }}</td>
                 <td>
                   <v-btn
                     elevation="0"
                     icon
-                    :to="{ path: '/reserve/librarian/EditStatus' }"
-                    ><v-icon>mdi-pencil</v-icon></v-btn
-                  >
-                </td>
-                <td>
-                  <v-btn elevation="0" icon><v-icon>mdi-delete</v-icon></v-btn>
-                </td>
-              </tr>
-              <tr>
-                <td>610510714</td>
-                <td>ป้ายภาควิชาคอมพิวเตอร์</td>
-                <td>
-                  012121<br />
-                  011121<br />
-                  124334<br />
-                  502444<br />
-                  555144
-                </td>
-                <td>021414545</td>
-                <td>รอดำเนินการ</td>
-                <td>
-                  <v-btn
-                    elevation="0"
-                    icon
-                    :to="{ path: '/reserve/librarian/EditStatus' }"
+                    :to="{
+                      name: 'reserve-librarian-EditStatus',
+                      params: { id: item.borrowID },
+                    }"
                     ><v-icon>mdi-pencil</v-icon></v-btn
                   >
                 </td>
@@ -88,3 +49,21 @@
     </v-row>
   </div>
 </template>
+
+<script>
+import { getBookingLibrarian } from '@/api/borrow'
+export default {
+  data: () => ({
+    list: [],
+  }),
+  mounted() {
+    getBookingLibrarian().then((res) => (this.list = res.data))
+  },
+}
+</script>
+<style lang="scss" scoped>
+.page-enter {
+}
+.page-leave-to {
+}
+</style>

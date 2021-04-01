@@ -27,6 +27,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-enter,
+.page-leave-to,
 .ed {
   height: 100vh;
 }

@@ -168,6 +168,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-enter,
+.page-leave-to,
 .plot {
   flex: 1;
   max-width: 300px;

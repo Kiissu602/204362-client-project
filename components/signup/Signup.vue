@@ -106,6 +106,8 @@
             outlined
             dense
             label="โทรศัพท์"
+            maxlenght="10"
+            :counter="10"
             :rules="rules.telPhoneRule"
         /></v-col>
       </v-row>
@@ -190,6 +192,13 @@
         </v-btn>
       </div>
     </v-form>
+    <v-snackbar v-model="snackbar" :timeout="timeout"
+      >สมัครแล้วจ้า<template #action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          ปิด
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -199,6 +208,8 @@ import * as rules from '@/api/validateRules'
 import dayjs from 'dayjs'
 export default {
   data: () => ({
+    snackbar: false,
+    timeout: 2000,
     rules: {
       ...rules,
     },
@@ -286,6 +297,7 @@ export default {
     },
     regist() {
       this.$emit('regist', this.detail)
+      this.snackbar = true
     },
   },
 }

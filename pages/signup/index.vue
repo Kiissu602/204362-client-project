@@ -25,6 +25,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-enter,
+.page-leave-to,
 .ind {
   height: 100%;
   width: 100%;

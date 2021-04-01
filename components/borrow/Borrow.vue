@@ -131,14 +131,17 @@ export default {
     book: {},
     member: [],
     list: [],
+    id: '',
     memberID: '',
     head: ['วันที่ยืม', 'กำหนดคืน', 'ชื่อผู้ยืม', 'ชื่อหนังสือ', 'แก้ไข'],
   }),
   methods: {
     add() {
       this.err = false
+      const id = {}
+      id.id = this.detail.memberID
       if (this.$refs.form.validate()) {
-        getMemberRuleBorrow(this.detail.memberID).then((res) => {
+        getMemberRuleBorrow(id).then((res) => {
           this.member = res.data
           getBookByID(this.detail.ISBN).then((ress) => {
             this.book = ress.data

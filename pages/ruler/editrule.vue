@@ -6,4 +6,9 @@
 export default {}
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.page-enter {
+}
+.page-leave-to {
+}
+</style>

@@ -6,7 +6,7 @@
         <v-row align="center" justify="center">
           <v-col
             ><v-text-field
-              v-model="detail.id"
+              v-model="detail.memberID"
               dense
               label="รหัส"
               outlined
@@ -16,7 +16,7 @@
           ></v-col>
           <v-col
             ><v-text-field
-              v-model="detail.firstname"
+              v-model="detail.firstName"
               outlined
               dense
               label="ชื่อ"
@@ -63,12 +63,6 @@
               label="หญิง"
               value="หญิง"
             ></v-checkbox>
-            <v-checkbox
-              v-model="detail.sex"
-              class="ml-2"
-              label="ไม่ระบุ"
-              value="ไม่ระบุ"
-            ></v-checkbox>
           </v-col>
         </v-row>
         <v-row>
@@ -114,7 +108,7 @@ import { getMemberByLibrarian } from '@/api/member'
 export default {
   data: () => ({
     detail: {
-      id: '',
+      memberID: '',
       name: '',
       firstName: '',
       lastName: '',

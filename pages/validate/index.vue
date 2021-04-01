@@ -1,5 +1,7 @@
 <template>
-  <div class="prf d-flex align-center justify-center"><Profile /></div>
+  <div class="xx d-flex align-center justify-center">
+    <Validate />
+  </div>
 </template>
 
 <script>
@@ -9,7 +11,7 @@ export default {}
 <style lang="scss" scoped>
 .page-enter,
 .page-leave-to,
-.prf {
+.xx {
   height: 100vh;
 }
 </style>

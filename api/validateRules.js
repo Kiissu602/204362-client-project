@@ -10,10 +10,7 @@ export const telPhoneRule = [
   (v) => /^0([0-9]){9}$/.test(v) || 'รูปแบบเบอร์ผิดนะจ๊ะ 0XXXXXXXXX',
 ]
 
-export const emailRule = [
-  (v) => !!v || 'E-mail ห้ามว่างจ๊ะ',
-  (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-]
+export const emailRule = [(v) => !!v || 'E-mail ห้ามว่างจ๊ะ']
 
 export const dropDownRule = [(v) => !!v || 'กรุณาเลือกด้วยจ๊ะ']
 

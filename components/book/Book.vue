@@ -65,12 +65,19 @@
             <p class="plot pl-8 text-subtitle-1">{{ detail.plot }}</p>
           </div>
         </div>
-        <div
-          v-if="login.job && login.job.jobName === 'Librarian'"
-          class="d-flex justify-end align-center"
-        >
+        <div class="d-flex justify-end align-center">
           <v-btn
-            class="primary"
+            v-if="login.job"
+            class="mx-4"
+            color="accent"
+            outlined
+            @click="booking"
+            >จอง</v-btn
+          >
+          <v-btn
+            v-if="login.job && login.job.jobName === 'Librarian'"
+            class="mx-4"
+            color="primary"
             link
             :to="{ name: 'book-editbook', params: { id: detail.isbn } }"
             >แก้ไข</v-btn
@@ -83,6 +90,7 @@
 
 <script>
 import { getBookByID } from '@/api/book'
+import { postBooking } from '@/api/borrow'
 import { mapState } from 'vuex'
 export default {
   filters: {
@@ -106,6 +114,16 @@ export default {
       this.detail = res.data
       this.detail.writer = this.detail.writer.join(', ')
     })
+  },
+  methods: {
+    booking() {
+      const obj = {
+        isbn: this.detail.isbn,
+        memberID: this.login.memberID,
+      }
+      console.log(obj)
+      postBooking(obj).then((res) => this.$router.push('/'))
+    },
   },
 }
 </script>

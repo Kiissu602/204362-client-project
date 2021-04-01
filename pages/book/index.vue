@@ -9,6 +9,8 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
+.page-enter,
+.page-leave-to,
 .book {
   height: 100vh;
 }

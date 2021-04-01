@@ -3,48 +3,101 @@
     <div class="d-flex align-center justify-center">
       <h1 class="text-h5 text-center mt-12">ค้นหา รายการยืม</h1>
     </div>
-    <div class="type d-flex align-center justify-center">
-      <v-radio-group v-model="type" row color="primary" ripple mandatory>
-        <v-radio class="mt-6 px-12" label="นักศึกษา" value="Student"></v-radio>
-        <v-radio class="mt-6 px-12" label="บุคลากร" value="Staff"></v-radio>
-      </v-radio-group>
+    <v-row class="mt-12">
+      <v-col>
+        <v-text-field
+          v-model="detail.isbn"
+          outlined
+          dense
+          label="ISBN"
+          maxlength="13"
+          :counter="13"
+      /></v-col>
+      <v-col>
+        <v-text-field
+          v-model="detail.id"
+          outlined
+          dense
+          label="รหัสผู้ใช้"
+          maxlength="9"
+          :counter="9"
+      /></v-col>
+    </v-row>
+    <div class="d-flex justify-end">
+      <v-btn color="primary" @click="get">ค้นหา</v-btn>
     </div>
-    <div>
-      <v-text-field outlined dense append-icon="mdi-magnify" />
-    </div>
-    <div>
+    <!-- <div>
       <p class="text-center text-subtitle-1">รหัส: {{ PID }}</p>
       <p class="text-center text-subtitle-1">ชื่อ: {{ fname }} {{ lname }}</p>
-    </div>
-    <table class="brl mt-12">
+    </div> -->
+    <v-simple-table class="brl mt-12">
       <thead>
         <tr>
-          <th v-for="item in head" :key="item" class="text-subtitle-1">
+          <th
+            v-for="item in head"
+            :key="item"
+            class="text-subtitle-1 text-center"
+          >
             {{ item }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in rules" :key="item.type">
-          <td class="text-center">{{ item.type }}</td>
-          <td class="text-center">{{ item.num }}</td>
-          <td class="text-center">{{ item.day }}</td>
-          <td class="text-center">{{ item.booking }}</td>
+        <tr v-for="item in data" :key="item.type">
+          <td class="text-center">
+            {{ dayjs(item.borrowDate).format('DD/MM/BBBB') }}
+          </td>
+          <td class="text-center">
+            {{ dayjs(item.dueDate).format('DD/MM/BBBB') }}
+          </td>
+          <td class="text-center">{{ item.firstName }} {{ item.lastName }}</td>
+          <td class="text-center">{{ item.title }}</td>
+          <td>
+            <div class="d-flex justify-center">
+              <v-btn small color="error" @click="del(item.id)"
+                ><v-icon>mdi-trash-can-outline</v-icon></v-btn
+              >
+            </div>
+          </td>
         </tr>
       </tbody>
-    </table>
+    </v-simple-table>
   </v-container>
 </template>
 
 <script>
+import { getBorrowByMember, getBorrowMemberBook } from '@/api/member'
+import { deleteBorrow } from '@/api/borrow'
+import dayjs from 'dayjs'
 export default {
   data: () => ({
-    type: '',
-    PID: '610510692',
-    fname: 'พรนะวัด',
-    lname: 'โบราณ',
+    detail: {
+      id: '',
+      isbn: '',
+    },
+    id: '',
+    data: [],
     head: ['วันที่ยืม', 'กำหนดคืน', 'ผู้ยืม', 'หนังสือ', 'ดำเนินการ'],
   }),
+  mounted() {
+    getBorrowByMember(this.id).then((res) => {
+      this.data = res.data
+    })
+  },
+  methods: {
+    del(id) {
+      deleteBorrow(id)
+      this.data = this.data.filter(function (el) {
+        return el.id !== id
+      })
+    },
+    get() {
+      getBorrowMemberBook(this.detail).then((res) => {
+        this.data = res.data
+      })
+    },
+    dayjs,
+  },
 }
 </script>
 
@@ -54,6 +107,5 @@ export default {
 }
 .brl {
   width: 100%;
-  border-bottom: 1px solid;
 }
 </style>

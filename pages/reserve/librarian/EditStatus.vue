@@ -5,21 +5,24 @@
     </v-row>
     <v-row>
       <v-col md="3" offset-md="3">
-        รหัสการยืม: 123456 <br />
-        รหัสมาชิก: 610510714<br />
+        รหัสการยืม: {{ detail.borrowID }} <br />
+        รหัสมาชิก: {{ detail.memberID }}<br />
         รายการจอง:<br />
-        1. 0000124 <br />
-        2.1244544<br />
-        3.1244544<br />
-        4.1244544<br />
-        สถานที่จัดส่ง: ป้ายภาควิชาคอมพิวเตอร์<br />
-        เบอร์ติดต่อ: 098765523<br />
+        {{ detail.isbn }} <br />
+
+        สถานที่จัดส่ง: {{ detail.reservePlace }}<br />
+        เบอร์ติดต่อ: {{ detail.phoneTemp }}<br />
       </v-col>
     </v-row>
     <v-row>
       <v-col md="3" offset-md="3">
         <v-col>สถานะการจัดส่ง</v-col>
-        <v-select :items="status" label="สถานะ" outlined></v-select>
+        <v-select
+          v-model="sta"
+          :items="value"
+          label="สถานะ"
+          outlined
+        ></v-select>
       </v-col>
     </v-row>
     <v-row>
@@ -33,24 +36,46 @@
         >
           ยกเลิก
         </v-btn>
-        <v-btn depressed color="purple darken-2" dark> อัพเดต </v-btn>
+        <v-btn depressed color="purple darken-2" @click="update" dark>
+          อัพเดต
+        </v-btn>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import { getBookingByID, putStatusBooking } from '@/api/borrow'
 export default {
   data: () => ({
-    status: [
-      'รอดำเนินการ',
-      'กำลังดำเนินการ',
-      'กำลังจัดส่ง',
-      'ส่งสำเร็จ',
-      'ส่งล้มเหลว',
-    ],
+    detail: {},
+
+    value: ['Waiting', 'Running', 'Delivery', 'Borrowing', 'Fail'],
+    sta: '',
   }),
+  mounted() {
+    getBookingByID(this.$route.params.id).then(
+      (res) => (this.detail = res.data)
+    )
+  },
+  methods: {
+    update() {
+      const obj = {
+        borrowID: this.detail.borrowID,
+        status: this.sta,
+      }
+
+      putStatusBooking(obj).then((res) =>
+        this.$router.push('/reserve/librarian/SearchReserve')
+      )
+    },
+  },
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.page-enter {
+}
+.page-leave-to {
+}
+</style>

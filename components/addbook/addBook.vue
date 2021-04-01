@@ -91,7 +91,6 @@
                 label="ฉบับที่พิมพ์"
                 outlined
                 dense
-                :rules="rules.publisherRule"
               ></v-text-field></v-col
             ><v-col
               ><v-text-field
@@ -99,7 +98,6 @@
                 label="จำนวนหน้า"
                 outlined
                 dense
-                :rules="rules.pageAndPriceBookRule"
               ></v-text-field></v-col></v-row></v-col
         ><v-col
           ><v-text-field
@@ -108,7 +106,6 @@
             suffix="บาท"
             outlined
             dense
-            :rules="rules.pageAndPriceBookRule"
           ></v-text-field></v-col
       ></v-row>
 
