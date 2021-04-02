@@ -121,7 +121,6 @@ export default {
         isbn: this.detail.isbn,
         memberID: this.login.memberID,
       }
-      console.log(obj)
       postBooking(obj).then((res) => this.$router.push('/'))
     },
   },

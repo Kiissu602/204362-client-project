@@ -144,7 +144,6 @@ export default {
   },
   methods: {
     search() {
-      console.log(this.detail)
       getMemberByLibrarian(this.detail).then((res) => {
         this.members = res.data.map((v) => ({
           ...v,

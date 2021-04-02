@@ -122,7 +122,6 @@ export default {
   }),
   mounted() {
     getJobs().then((res) => {
-      console.log(res.data)
       this.student = res.data[1]
       this.staff = res.data[2]
     })

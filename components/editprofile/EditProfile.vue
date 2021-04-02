@@ -29,6 +29,7 @@
                 outlined
                 dense
                 label="ชื่อ"
+                :rules="rules.NameMemberRule"
               />
             </v-col>
             <v-col
@@ -37,6 +38,7 @@
                 outlined
                 dense
                 label="นามสกุล"
+                :rules="rules.NameMemberRule"
               />
             </v-col>
           </v-row>
@@ -80,7 +82,12 @@
         </v-select
       ></v-col>
       <v-col
-        ><v-text-field v-model="field.phone" outlined dense label="โทรศัพท์"
+        ><v-text-field
+          v-model="field.phone"
+          outlined
+          dense
+          label="โทรศัพท์"
+          :rules="telPhoneRule"
       /></v-col>
     </v-row>
     <v-row
@@ -155,10 +162,11 @@
 import dayjs from 'dayjs'
 import { mapState } from 'vuex'
 import { getFaculty, getDepart } from '@/api/faculties'
-
+import * as rules from '@/api/validateRules'
 export default {
   data: () => ({
     field: {
+      rules: { ...rules },
       image: null,
       memberID: '',
       firstName: '',
