@@ -29,7 +29,6 @@
                 outlined
                 dense
                 label="ชื่อ"
-                :rules="rules.NameMemberRule"
               />
             </v-col>
             <v-col
@@ -38,7 +37,6 @@
                 outlined
                 dense
                 label="นามสกุล"
-                :rules="rules.NameMemberRule"
               />
             </v-col>
           </v-row>
